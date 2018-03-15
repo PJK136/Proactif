@@ -13,20 +13,20 @@ public class Service {
     
     public static void inscription(Person p)
     {
-        JpaUtil.creerEntityManager();
-        JpaUtil.ouvrirTransaction();
+        JpaUtil.createEntityManager();
+        JpaUtil.beginTransaction();
         PersonDAO.create(p);
         try 
         {
-            JpaUtil.validerTransaction();            
+            JpaUtil.commitTransaction();            
         } 
         catch(RollbackException e) 
         {
-            JpaUtil.annulerTransaction(); 
+            JpaUtil.rollbackTransaction(); 
         }
         finally
         {
-            JpaUtil.fermerEntityManager();
+            JpaUtil.closeEntityManager();
         }
         
     }        

@@ -10,6 +10,6 @@ public class PersonDAO {
     
     public static void create(Person p)
     {
-        JpaUtil.obtenirEntityManager().persist(p);
+        JpaUtil.getEntityManager().persist(p);
     }        
 }
