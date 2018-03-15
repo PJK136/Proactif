@@ -17,14 +17,8 @@ public class Client extends Person {
     
     public Client() {}
     
-    public Client(String honorific, String surname, String forename, Date birthdate, String telephone, String mail, String passwordHash, Address address) {
-        super(honorific, surname, forename, birthdate, telephone, mail, passwordHash, address);
+    public Client(String honorific, String firstname, String lastname, Date birthDate, String phoneNumber, String email, String passwordHash, Address address) {
+        super(honorific, firstname, lastname, birthDate, phoneNumber, email, passwordHash, address);
     }
 
-    
-    
-    
-
-    
-    
 }

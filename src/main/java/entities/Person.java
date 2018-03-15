@@ -26,30 +26,29 @@ public abstract class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
     protected String honorific;
-    protected String surname;
-    protected String forename;
+    protected String firstName;
+    protected String lastName;
     @Temporal(DATE)
-    protected Date birthdate;
-    protected String telephone;
-    protected String mail;
+    protected Date birthDate;
+    protected String phoneNumber;
+    protected String email;
     protected String passwordHash;
     @Embedded
     protected Address address;
 
     public Person() {}
     
-    public Person(String honorific, String surname, String forename, Date birthdate, String telephone, String mail, String passwordHash, Address address) {
+    public Person(String honorific, String firstName, String lastName, Date birthdate, String phoneNumber, String email, String passwordHash, Address address) {
         this.honorific = honorific;
-        this.surname = surname;
-        this.forename = forename;
-        this.birthdate = birthdate;
-        this.telephone = telephone;
-        this.mail = mail;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthdate;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.passwordHash = passwordHash;
         this.address = address;
     }
-    
-    
+
     
     public Long getId() {
         return id;
@@ -63,44 +62,44 @@ public abstract class Person implements Serializable {
         this.honorific = honorific;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getForename() {
-        return forename;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setForename(String forename) {
-        this.forename = forename;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPasswordHash() {
@@ -118,19 +117,17 @@ public abstract class Person implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-    
     
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 31 * hash + Objects.hashCode(this.id);
         hash = 31 * hash + Objects.hashCode(this.honorific);
-        hash = 31 * hash + Objects.hashCode(this.surname);
-        hash = 31 * hash + Objects.hashCode(this.forename);
-        hash = 31 * hash + Objects.hashCode(this.birthdate);
-        hash = 31 * hash + Objects.hashCode(this.telephone);
-        hash = 31 * hash + Objects.hashCode(this.mail);
+        hash = 31 * hash + Objects.hashCode(this.firstName);
+        hash = 31 * hash + Objects.hashCode(this.lastName);
+        hash = 31 * hash + Objects.hashCode(this.birthDate);
+        hash = 31 * hash + Objects.hashCode(this.phoneNumber);
+        hash = 31 * hash + Objects.hashCode(this.email);
         hash = 31 * hash + Objects.hashCode(this.passwordHash);
         hash = 31 * hash + Objects.hashCode(this.address);
         return hash;
@@ -144,32 +141,32 @@ public abstract class Person implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Person)) {
             return false;
         }
         final Person other = (Person) obj;
-        if (!Objects.equals(this.honorific, other.honorific)) {
-            return false;
-        }
-        if (!Objects.equals(this.surname, other.surname)) {
-            return false;
-        }
-        if (!Objects.equals(this.forename, other.forename)) {
-            return false;
-        }
-        if (!Objects.equals(this.telephone, other.telephone)) {
-            return false;
-        }
-        if (!Objects.equals(this.mail, other.mail)) {
-            return false;
-        }
-        if (!Objects.equals(this.passwordHash, other.passwordHash)) {
-            return false;
-        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.birthdate, other.birthdate)) {
+        if (!Objects.equals(this.honorific, other.honorific)) {
+            return false;
+        }
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
+            return false;
+        }
+        if (!Objects.equals(this.birthDate, other.birthDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.phoneNumber, other.phoneNumber)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.passwordHash, other.passwordHash)) {
             return false;
         }
         if (!Objects.equals(this.address, other.address)) {
@@ -180,10 +177,7 @@ public abstract class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" + "id=" + id + ", honorific=" + honorific + ", surname=" + surname + ", forename=" + forename + ", birthdate=" + birthdate + ", telephone=" + telephone + ", mail=" + mail + ", passwordHash=" + passwordHash + ", address=" + address + '}';
+        return "Person{" + "id=" + id + ", honorific=" + honorific + ", firstName=" + firstName + ", lastName=" + lastName + ", birthdate=" + birthDate + ", phoneNumber=" + phoneNumber + ", email=" + email + ", passwordHash=" + passwordHash + ", address=" + address + '}';
     }
-    
-    
-    
     
 }

@@ -14,20 +14,20 @@ public class Address implements Serializable {
 
     private String address1;
     private String address2;
-    private String zip;
+    private String zipCode;
     private String city;
     private String country;
-    private LatLng gpsCoords;
+    private LatLng geoCoords;
     
     public Address() {}
     
-    public Address(String address1, String address2, String zip, String city, String country, LatLng gpsCoords) {
+    public Address(String address1, String address2, String zipCode, String city, String country, LatLng geoCoords) {
         this.address1 = address1;
         this.address2 = address2;
-        this.zip = zip;
+        this.zipCode = zipCode;
         this.city = city;
         this.country = country;
-        this.gpsCoords = gpsCoords;
+        this.geoCoords = geoCoords;
     }
 
     public String getAddress1() {
@@ -46,12 +46,12 @@ public class Address implements Serializable {
         this.address2 = address2;
     }
 
-    public String getZip() {
-        return zip;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setZip(String zip) {
-        this.zip = zip;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getCity() {
@@ -70,12 +70,12 @@ public class Address implements Serializable {
         this.country = country;
     }
 
-    public LatLng getGpsCoords() {
-        return gpsCoords;
+    public LatLng getGeoCoords() {
+        return geoCoords;
     }
 
-    public void setGpsCoords(LatLng gpsCoords) {
-        this.gpsCoords = gpsCoords;
+    public void setGeoCoords(LatLng geoCoords) {
+        this.geoCoords = geoCoords;
     }
 
     @Override
@@ -83,10 +83,10 @@ public class Address implements Serializable {
         int hash = 5;
         hash = 47 * hash + Objects.hashCode(this.address1);
         hash = 47 * hash + Objects.hashCode(this.address2);
-        hash = 47 * hash + Objects.hashCode(this.zip);
+        hash = 47 * hash + Objects.hashCode(this.zipCode);
         hash = 47 * hash + Objects.hashCode(this.city);
         hash = 47 * hash + Objects.hashCode(this.country);
-        hash = 47 * hash + Objects.hashCode(this.gpsCoords);
+        hash = 47 * hash + Objects.hashCode(this.geoCoords);
         return hash;
     }
 
@@ -108,7 +108,7 @@ public class Address implements Serializable {
         if (!Objects.equals(this.address2, other.address2)) {
             return false;
         }
-        if (!Objects.equals(this.zip, other.zip)) {
+        if (!Objects.equals(this.zipCode, other.zipCode)) {
             return false;
         }
         if (!Objects.equals(this.city, other.city)) {
@@ -117,7 +117,7 @@ public class Address implements Serializable {
         if (!Objects.equals(this.country, other.country)) {
             return false;
         }
-        if (!Objects.equals(this.gpsCoords, other.gpsCoords)) {
+        if (!Objects.equals(this.geoCoords, other.geoCoords)) {
             return false;
         }
         return true;
@@ -125,13 +125,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "Address{" + "address1=" + address1 + ", address2=" + address2 + ", zip=" + zip + ", city=" + city + ", country=" + country + ", gpsCoords=" + gpsCoords + '}';
+        return "Address{" + "address1=" + address1 + ", address2=" + address2 + ", zipCode=" + zipCode + ", city=" + city + ", country=" + country + ", geoCoords=" + geoCoords + '}';
     }
-
-    
-
-    
-
-    
     
 }
