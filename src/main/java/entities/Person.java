@@ -141,13 +141,10 @@ public abstract class Person implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof Person)) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
         final Person other = (Person) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
         if (!Objects.equals(this.honorific, other.honorific)) {
             return false;
         }
@@ -157,9 +154,6 @@ public abstract class Person implements Serializable {
         if (!Objects.equals(this.lastName, other.lastName)) {
             return false;
         }
-        if (!Objects.equals(this.birthDate, other.birthDate)) {
-            return false;
-        }
         if (!Objects.equals(this.phoneNumber, other.phoneNumber)) {
             return false;
         }
@@ -167,6 +161,12 @@ public abstract class Person implements Serializable {
             return false;
         }
         if (!Objects.equals(this.passwordHash, other.passwordHash)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.birthDate, other.birthDate)) {
             return false;
         }
         if (!Objects.equals(this.address, other.address)) {
