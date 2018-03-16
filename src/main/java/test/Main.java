@@ -32,7 +32,8 @@ public class Main {
         Address addr1 = new Address("ligne addresse1", "ligne addresse1", "75000", "Paris", "France", geolocalisation);
         Client c1 = new Client("Mr.", "Tristan", "Cadet", d1, "02 99 XX XX XX", "xxx@xxx.xx", "unHash", addr1); 
         System.out.println(c1.toString());
-        Service.inscription(c1);
+        Service.register(c1);
+        
         JpaUtil.destroy();
     }
     
