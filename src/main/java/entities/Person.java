@@ -12,6 +12,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
+import javax.persistence.Version;
 
 /**
  *
@@ -25,6 +26,8 @@ public abstract class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
+    @Version
+    protected Long version;
     protected String honorific;
     protected String firstName;
     protected String lastName;
@@ -49,7 +52,6 @@ public abstract class Person implements Serializable {
         this.address = address;
     }
 
-    
     public Long getId() {
         return id;
     }
@@ -177,7 +179,7 @@ public abstract class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" + "id=" + id + ", honorific=" + honorific + ", firstName=" + firstName + ", lastName=" + lastName + ", birthdate=" + birthDate + ", phoneNumber=" + phoneNumber + ", email=" + email + ", passwordHash=" + passwordHash + ", address=" + address + '}';
+        return "Person{" + "id=" + id + ", version=" + version + ", honorific=" + honorific + ", firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", phoneNumber=" + phoneNumber + ", email=" + email + ", passwordHash=" + passwordHash + ", address=" + address + '}';
     }
-    
+
 }

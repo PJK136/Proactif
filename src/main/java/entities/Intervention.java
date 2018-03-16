@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 /**
  *
@@ -19,6 +20,8 @@ public class Intervention implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Version
+    protected Long version;
     @ManyToOne
     private Client client;
     public Long getId() {
@@ -32,8 +35,9 @@ public class Intervention implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 19 * hash + Objects.hashCode(this.id);
-        hash = 19 * hash + Objects.hashCode(this.client);
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.version);
+        hash = 53 * hash + Objects.hashCode(this.client);
         return hash;
     }
 
@@ -52,6 +56,9 @@ public class Intervention implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
+        if (!Objects.equals(this.version, other.version)) {
+            return false;
+        }
         if (!Objects.equals(this.client, other.client)) {
             return false;
         }
@@ -60,7 +67,7 @@ public class Intervention implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Intervention[ id=" + id + " ]";
+        return "Intervention{" + "id=" + id + ", version=" + version + ", client=" + client + '}';
     }
-    
+
 }
