@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Cette classe fournit des méthodes statiques utiles pour accéder aux
@@ -14,7 +16,8 @@ import javax.persistence.RollbackException;
  * @author DASI Team
  */
 public class JpaUtil {
-
+    private final static Logger logger = LoggerFactory.getLogger(JpaUtil.class);
+            
     // *************************************************************************************
     // * TODO: IMPORTANT -- Adapter le nom de l'Unité de Persistance (cf. persistence.xml) *
     // *************************************************************************************
@@ -44,24 +47,6 @@ public class JpaUtil {
         }
     };
 
-    // Méthode pour avoir des messages de Log dans le bon ordre (pause)
-    private static void pause(long milliseconds) {
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException ex) {
-            ex.hashCode();
-        }
-    }
-
-    // Méthode pour avoir des messages de Log dans le bon ordre (log)
-    private static void log(String message) {
-        System.out.flush();
-        pause(5);
-        System.err.println("[JpaUtil:Log] " + message);
-        System.err.flush();
-        pause(5);
-    }
-
     /**
      * Initialise la Factory de Entity Manager.
      * <br><strong>À utiliser uniquement au début de la méthode main() [projet
@@ -69,7 +54,7 @@ public class JpaUtil {
      * (ActionServlet) [projet Web Application].</strong>
      */
     public static synchronized void init() {
-        log("Initialisation de la factory de contexte de persistance");
+        logger.info("Initialisation de la factory de contexte de persistance");
         if (entityManagerFactory != null) {
             entityManagerFactory.close();
         }
@@ -83,7 +68,7 @@ public class JpaUtil {
      * (ActionServlet) [projet Web Application].</strong>
      */
     public static synchronized void destroy() {
-        log("Libération de la factory de contexte de persistance");
+        logger.info("Libération de la factory de contexte de persistance");
         if (entityManagerFactory != null) {
             entityManagerFactory.close();
             entityManagerFactory = null;
@@ -95,7 +80,7 @@ public class JpaUtil {
      * <br><strong>À utiliser uniquement au niveau Service.</strong>
      */
     public static void createEntityManager() {
-        log("Création du contexte de persistance");
+        logger.info("Création du contexte de persistance");
         threadLocalEntityManager.set(entityManagerFactory.createEntityManager());
     }
 
@@ -104,7 +89,7 @@ public class JpaUtil {
      * <br><strong>À utiliser uniquement au niveau Service.</strong>
      */
     public static void closeEntityManager() {
-        log("Fermeture du contexte de persistance");
+        logger.info("Fermeture du contexte de persistance");
         EntityManager em = threadLocalEntityManager.get();
         em.close();
         threadLocalEntityManager.set(null);
@@ -115,12 +100,12 @@ public class JpaUtil {
      * <br><strong>À utiliser uniquement au niveau Service.</strong>
      */
     public static void beginTransaction() {
-        log("Ouverture de la transaction (begin)");
+        logger.info("Ouverture de la transaction (begin)");
         try {
             EntityManager em = threadLocalEntityManager.get();
             em.getTransaction().begin();
         } catch (Exception ex) {
-            log("Erreur lors de l'ouverture de la transaction");
+            logger.error("Erreur lors de l'ouverture de la transaction");
             throw ex;
         }
     }
@@ -132,12 +117,12 @@ public class JpaUtil {
      * @exception RollbackException lorsque le <em>commit</em> n'a pas réussi.
      */
     public static void commitTransaction() throws RollbackException {
-        log("Validation de la transaction (commit)");
+        logger.info("Validation de la transaction (commit)");
         try {
             EntityManager em = threadLocalEntityManager.get();
             em.getTransaction().commit();
         } catch (Exception ex) {
-            log("Erreur lors de la validation (commit) de la transaction");
+            logger.error("Erreur lors de la validation (commit) de la transaction");
             throw ex;
         }
     }
@@ -150,16 +135,16 @@ public class JpaUtil {
      */
     public static void rollbackTransaction() {
         try {
-            log("Annulation de la transaction (rollback)");
+            logger.info("Annulation de la transaction (rollback)");
 
             EntityManager em = threadLocalEntityManager.get();
             if (em.getTransaction().isActive()) {
-                log("Annulation effective de la transaction (rollback d'une transaction active)");
+                logger.info("Annulation effective de la transaction (rollback d'une transaction active)");
                 em.getTransaction().rollback();
             }
 
         } catch (Exception ex) {
-            log("Erreur lors de l'annulation (rollback) de la transaction");
+            logger.error("Erreur lors de l'annulation (rollback) de la transaction");
             throw ex;
         }
     }
@@ -171,7 +156,7 @@ public class JpaUtil {
      * @return instance de Entity Manager
      */
     protected static EntityManager getEntityManager() {
-        log("Obtention du contexte de persistance");
+        logger.info("Obtention du contexte de persistance");
         return threadLocalEntityManager.get();
     }
 }
