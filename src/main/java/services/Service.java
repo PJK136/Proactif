@@ -1,10 +1,18 @@
 package services;
 
+import com.google.maps.model.LatLng;
+import dao.EmployeeDAO;
+import dao.InterventionDAO;
 import dao.JpaUtil;
 import dao.PersonDAO;
+import entities.Employee;
+import entities.Intervention;
 import entities.Person;
 import java.nio.charset.Charset;
+import java.util.List;
+import java.util.ListIterator;
 import javax.persistence.RollbackException;
+import services.util.GeoTest;
 import services.util.PasswordUtil;
 
 /**
@@ -54,4 +62,49 @@ public final class Service {
         
         return null;
     }
+    
+    public static boolean createAndAssignIntervention(Intervention intervention) 
+    {
+        JpaUtil.createEntityManager();
+        List<Employee> availableEmployees = EmployeeDAO.getAllAvailable();
+        if(availableEmployees.isEmpty())
+        {   //Aucun employé disponible
+            JpaUtil.closeEntityManager();
+            return false;
+        } 
+        
+        ListIterator<Employee> it = availableEmployees.listIterator();
+        LatLng clientCoords = intervention.getClient().getAddress().getGeoCoords();
+        Employee closest = null;
+        double distanceMin = GeoTest.getTripDurationByBicycleInKm(it.next().getAddress().getGeoCoords(), clientCoords);
+        while(it.hasNext())
+        {
+           Employee cur = it.next(); 
+           double currentDistance = GeoTest.getTripDurationByBicycleInKm(cur.getAddress().getGeoCoords(), clientCoords);
+           if(distanceMin > currentDistance)
+           {
+               distanceMin = currentDistance;
+               closest = cur; 
+           }    
+        }
+        
+        intervention.setEmployee(closest);
+        JpaUtil.beginTransaction();
+        InterventionDAO.create(intervention);
+      
+        try 
+        {
+            JpaUtil.commitTransaction();
+            return true;
+        } 
+        catch(RollbackException e) 
+        {
+            JpaUtil.rollbackTransaction(); 
+            return false;
+        }
+        finally
+        {
+            JpaUtil.closeEntityManager();
+        } 
+    }        
 }

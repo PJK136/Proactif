@@ -8,9 +8,11 @@ package entities;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
-import javafx.util.Pair;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import static javax.persistence.TemporalType.TIME;
 
 /**
  *
@@ -20,17 +22,20 @@ import javax.persistence.OneToMany;
 public class Employee extends Person {
 
     boolean available;
-    Pair<LocalTime, LocalTime> workHours;
+    @Temporal(TemporalType.TIME)
+    Date workStart;
+    @Temporal(TemporalType.TIME)
+    Date workEnd;
     @OneToMany(mappedBy="employee")
     List<Intervention> interventions;
 
     public Employee(){}
     
-    public Employee(boolean available, Pair<LocalTime, LocalTime> workHours, List<Intervention> interventions, String honorific, String firstName, String lastName, Date birthdate, String phoneNumber, String email, String passwordHash, Address address) {
-        super(honorific, firstName, lastName, birthdate, phoneNumber, email, passwordHash, address);
+    public Employee(boolean available, Date workStart, Date workEnd, String honorific, String firstName, String lastName, Date birthdate, String phoneNumber, String email, Address address) {
+        super(honorific, firstName, lastName, birthdate, phoneNumber, email, address);
         this.available = available;
-        this.workHours = workHours;
-        this.interventions = interventions;
+        this.workStart = workStart;
+        this.workEnd = workEnd;
     }
     
     
@@ -43,13 +48,25 @@ public class Employee extends Person {
         this.available = available;
     }
 
-    public Pair<LocalTime, LocalTime> getWorkHours() {
-        return workHours;
+    public Date getWorkStart() {
+        return workStart;
     }
 
-    public void setWorkHours(Pair<LocalTime, LocalTime> workHours) {
-        this.workHours = workHours;
+    public void setWorkStart(Date workStart) {
+        this.workStart = workStart;
     }
+
+    public Date getWorkEnd() {
+        return workEnd;
+    }
+
+    public void setWorkEnd(Date workEnd) {
+        this.workEnd = workEnd;
+    }
+
+    
+
+    
 
     public List<Intervention> getInterventions() {
         return interventions;

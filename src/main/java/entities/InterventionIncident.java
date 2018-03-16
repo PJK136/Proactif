@@ -17,9 +17,11 @@ public class InterventionIncident extends Intervention {
 
     public InterventionIncident() {}
 
-    public InterventionIncident(Long id, Long version, String description, Date startDate, Date endDate, String comment, boolean success, Client client, Employee employee) {
-        super(id, version, description, startDate, endDate, comment, success, client, employee);
+    public InterventionIncident(String description, Date startDate, Client client) {
+        super(description, startDate, client);
     }
+
+    
     
     
 

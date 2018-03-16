@@ -19,12 +19,15 @@ public class InterventionLivraison extends Intervention {
     private String company;
     
     public InterventionLivraison() {}
-    
-    public InterventionLivraison(String object, String company, Long id, Long version, String description, Date startDate, Date endDate, String comment, boolean success, Client client, Employee employee) {
-        super(id, version, description, startDate, endDate, comment, success, client, employee);
+
+    public InterventionLivraison(String object, String company, String description, Date startDate, Client client) {
+        super(description, startDate, client);
         this.object = object;
         this.company = company;
     }
+
+    
+    
     
     
 

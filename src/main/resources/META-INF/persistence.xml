@@ -6,6 +6,10 @@
     <class>entities.Person</class>
     <class>entities.Client</class>
     <class>entities.Intervention</class>
+    <class>entities.Employee</class>
+    <class>entities.InterventionIncident</class>
+    <class>entities.InterventionAnimal</class>
+    <class>entities.InterventionLivraison</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/proactif2"/>
       <property name="javax.persistence.jdbc.user" value="tcadet"/>

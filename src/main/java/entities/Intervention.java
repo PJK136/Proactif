@@ -38,7 +38,7 @@ public class Intervention implements Serializable {
     
     public Intervention() {}
     
-    public Intervention(Long id, Long version, String description, Date startDate, Date endDate, String comment, boolean success, Client client, Employee employee) {
+    public Intervention(String description, Date startDate, Client client) {
         this.id = id;
         this.version = version;
         this.description = description;
