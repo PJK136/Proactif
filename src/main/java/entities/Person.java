@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +35,7 @@ public abstract class Person implements Serializable {
     @Temporal(DATE)
     protected Date birthDate;
     protected String phoneNumber;
+    @Column(unique = true)
     protected String email;
     protected String passwordHash;
     @Embedded
@@ -41,14 +43,13 @@ public abstract class Person implements Serializable {
 
     public Person() {}
     
-    public Person(String honorific, String firstName, String lastName, Date birthdate, String phoneNumber, String email, String passwordHash, Address address) {
+    public Person(String honorific, String firstName, String lastName, Date birthdate, String phoneNumber, String email, Address address) {
         this.honorific = honorific;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthdate;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.passwordHash = passwordHash;
         this.address = address;
     }
 

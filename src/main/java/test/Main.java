@@ -28,11 +28,16 @@ public class Main {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        LatLng geolocalisation = new LatLng();
-        Address addr1 = new Address("ligne addresse1", "ligne addresse1", "75000", "Paris", "France", geolocalisation);
-        Client c1 = new Client("Mr.", "Tristan", "Cadet", d1, "02 99 XX XX XX", "xxx@xxx.xx", "unHash", addr1); 
-        System.out.println(c1.toString());
-        Service.register(c1);
+        //LatLng geolocalisation = new LatLng();
+        Address addr1 = new Address("ligne addresse1", "ligne addresse1", "75000", "Paris", "France");
+        Client c1 = new Client("Mr.", "Tristan", "Cadet", d1, "02 99 XX XX XX", "xxx@xxx.xx", addr1); 
+        
+        Service.register(c1, new char[]{'m', 'o', 'n', 'm', 'd', 'p'});
+        
+        System.out.println(c1);
+        
+        System.out.println(Service.login("xxx@xxx.xx", "aeilrfjsdlkj".toCharArray()));
+        System.out.println(Service.login("xxx@xxx.xx", "monmdp".toCharArray()));
         
         JpaUtil.destroy();
     }

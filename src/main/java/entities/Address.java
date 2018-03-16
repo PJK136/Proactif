@@ -21,13 +21,12 @@ public class Address implements Serializable {
     
     public Address() {}
     
-    public Address(String address1, String address2, String zipCode, String city, String country, LatLng geoCoords) {
+    public Address(String address1, String address2, String zipCode, String city, String country) {
         this.address1 = address1;
         this.address2 = address2;
         this.zipCode = zipCode;
         this.city = city;
         this.country = country;
-        this.geoCoords = geoCoords;
     }
 
     public String getAddress1() {
