@@ -35,6 +35,10 @@ public class Intervention implements Serializable {
     protected Date endDate;
     protected String comment;
     protected boolean success;
+    @ManyToOne
+    protected Client client;
+    @ManyToOne
+    protected Employee employee;
     
     public Intervention() {}
     
@@ -49,16 +53,6 @@ public class Intervention implements Serializable {
         this.client = client;
         this.employee = employee;
     }
-
-    
-    
-    
-    
-    
-    @ManyToOne
-    protected Client client;
-    @ManyToOne
-    protected Employee employee;
     
     public Long getId() {
         return id;

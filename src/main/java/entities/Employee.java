@@ -8,6 +8,7 @@ package entities;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -37,10 +38,6 @@ public class Employee extends Person {
         this.workStart = workStart;
         this.workEnd = workEnd;
     }
-    
-    
-    
-    
 
     public boolean isAvailable() {
         return available;
@@ -66,32 +63,42 @@ public class Employee extends Person {
         this.workEnd = workEnd;
     }
 
-    
-
-    
-
     public List<Intervention> getInterventions() {
         return interventions;
     }
 
-    
-    
-    
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 83 * hash + (this.available ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.workStart);
+        hash = 83 * hash + Objects.hashCode(this.workEnd);
+        hash = 83 * hash + Objects.hashCode(this.interventions);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employee)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Employee other = (Employee) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Employee other = (Employee) obj;
+        if (this.available != other.available) {
+            return false;
+        }
+        if (!Objects.equals(this.workStart, other.workStart)) {
+            return false;
+        }
+        if (!Objects.equals(this.workEnd, other.workEnd)) {
+            return false;
+        }
+        if (!Objects.equals(this.interventions, other.interventions)) {
             return false;
         }
         return true;
@@ -101,7 +108,5 @@ public class Employee extends Person {
     public String toString() {
         return "Employee{" + super.toString() + "available=" + available + ", workStart=" + workStart + ", workEnd=" + workEnd + '}';
     }
-
-    
     
 }

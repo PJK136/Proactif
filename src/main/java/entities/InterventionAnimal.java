@@ -6,6 +6,7 @@
 package entities;
 
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
 
 /**
@@ -23,17 +24,6 @@ public class InterventionAnimal extends Intervention {
         super(description, startDate, client);
         this.animal = animal;
     }
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
 
     public String getAnimal() {
         return animal;
@@ -42,24 +32,30 @@ public class InterventionAnimal extends Intervention {
     public void setAnimal(String animal) {
         this.animal = animal;
     }
-    
-    
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = super.hashCode();
+        hash = 29 * hash + Objects.hashCode(this.animal);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof InterventionAnimal)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        InterventionAnimal other = (InterventionAnimal) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        final InterventionAnimal other = (InterventionAnimal) obj;
+        if (!Objects.equals(this.animal, other.animal)) {
             return false;
         }
         return true;
@@ -67,7 +63,7 @@ public class InterventionAnimal extends Intervention {
 
     @Override
     public String toString() {
-        return "entities.InterventionAnimal[ id=" + id + " ]";
+        return "InterventionAnimal{" + super.toString() + ", animal=" + animal + '}';
     }
     
 }

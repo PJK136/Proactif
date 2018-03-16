@@ -6,6 +6,7 @@
 package entities;
 
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
 
 /**
@@ -26,11 +27,6 @@ public class InterventionLivraison extends Intervention {
         this.company = company;
     }
 
-    
-    
-    
-    
-
     public String getObject() {
         return object;
     }
@@ -47,23 +43,33 @@ public class InterventionLivraison extends Intervention {
         this.company = company;
     }
 
-    
-    
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = super.hashCode();
+        hash = 79 * hash + Objects.hashCode(this.object);
+        hash = 79 * hash + Objects.hashCode(this.company);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof InterventionLivraison)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        InterventionLivraison other = (InterventionLivraison) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        final InterventionLivraison other = (InterventionLivraison) obj;
+        if (!Objects.equals(this.object, other.object)) {
+            return false;
+        }
+        if (!Objects.equals(this.company, other.company)) {
             return false;
         }
         return true;
@@ -71,7 +77,6 @@ public class InterventionLivraison extends Intervention {
 
     @Override
     public String toString() {
-        return "entities.InterventionLivraison[ id=" + id + " ]";
+        return "InterventionLivraison{" + super.toString() + ", object=" + object + ", company=" + company + '}';
     }
-    
 }
