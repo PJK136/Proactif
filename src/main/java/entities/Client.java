@@ -14,6 +14,10 @@ public class Client extends Person {
     
     @OneToMany(mappedBy="client")
     private List<Intervention> interventions;
+
+    public List<Intervention> getInterventions() {
+        return interventions;
+    }
     
     public Client() {}
     
