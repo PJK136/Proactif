@@ -18,9 +18,9 @@ import org.apache.commons.csv.CSVRecord;
 
 
 public class csvConvert {
-    public static List<Employee> loadEmployeeWithAddress(String employeeFile, String addressFile) {
-        List<Employee> employees = loadEmployee(employeeFile);
-        List<Address> addresses = loadAddress(addressFile);
+    public static List<Employee> loadEmployeesWithAddresses(String employeeFile, String addressFile) {
+        List<Employee> employees = loadEmployees(employeeFile);
+        List<Address> addresses = loadAddresses(addressFile);
         if(employees.size()!=addresses.size()) {
             System.err.println("Échec, le nombre d'employés (="+employees.size()+") doit être égal au nombre d'adresses (="+addresses.size()+").");
             return null;
@@ -31,9 +31,9 @@ public class csvConvert {
         return employees;
     }
     
-    public static List<Client> loadClientWithAddress(String clientFile, String addressFile) {
-        List<Client> clients = loadClient(clientFile);
-        List<Address> addresses = loadAddress(addressFile);
+    public static List<Client> loadClientsWithAddresses(String clientFile, String addressFile) {
+        List<Client> clients = loadClients(clientFile);
+        List<Address> addresses = loadAddresses(addressFile);
         if(clients.size()!=addresses.size()) {
             System.err.println("Échec, le nombre de clients (="+clients.size()+") doit être égal au nombre d'adresses (="+addresses.size()+").");
             return null;
@@ -44,7 +44,7 @@ public class csvConvert {
         return clients;
     }
     
-    public static List<Employee> loadEmployee(String employeeFile) {
+    public static List<Employee> loadEmployees(String employeeFile) {
         List<Employee> employees = new LinkedList<>();   
         Iterable<CSVRecord> records = null;
         try {
@@ -72,7 +72,7 @@ public class csvConvert {
         return employees; 
     }
     
-    public static List<Client> loadClient(String clientFile) {
+    public static List<Client> loadClients(String clientFile) {
         List<Client> clients = new LinkedList<>();   
         Iterable<CSVRecord> records = null;
         try {
@@ -96,7 +96,7 @@ public class csvConvert {
         return clients; 
     }
     
-    public static List<Address> loadAddress(String addressFile) {        
+    public static List<Address> loadAddresses(String addressFile) {        
         List<Address> addresses = new LinkedList<>();   
         Iterable<CSVRecord> records = null;
         try {
@@ -127,31 +127,31 @@ public class csvConvert {
         final String dataPath = "src/main/resources/mockData/";
        
         /*System.out.println("------EMPLOYEE ADRESSES------");
-        for(Address address: loadAddress(dataPath + "employee_address.csv")) {
+        for(Address address: loadAddresses(dataPath + "employee_address.csv")) {
             System.out.println(address);
         }
         System.out.println("------CLIENT ADRESSES------");
-        for(Address address: loadAddress(dataPath + "client_address.csv")) {
+        for(Address address: loadAddresses(dataPath + "client_address.csv")) {
             System.out.println(address);
-        }*/
+        }
         
-        /*System.out.println("------CLIENTS------");
-        for(Client client: loadClient(dataPath + "client.csv")) {
+        System.out.println("------CLIENTS------");
+        for(Client client: loadClients(dataPath + "client.csv")) {
             System.out.println(client);
-        }*/
+        }
         
-        /*System.out.println("------EMPLOYEES------");
-        for(Employee employee: loadEmployee(dataPath + "employee.csv")) {
+        System.out.println("------EMPLOYEES------");
+        for(Employee employee: loadEmployees(dataPath + "employee.csv")) {
             System.out.println(employee);
-        }*/
+        }
         
-        /*System.out.println("------CLIENTS WITH ADDRESSES------");
-        for(Client client: loadClientWithAddress(dataPath + "client.csv", dataPath + "client_address.csv")) {
+        System.out.println("------CLIENTS WITH ADDRESSES------");
+        for(Client client: loadClientsWithAddresses(dataPath + "client.csv", dataPath + "client_address.csv")) {
             System.out.println(client);
         }*/
         
         System.out.println("------EMPLOYEES WITH ADDRESSES------");
-        for(Employee employee: loadEmployeeWithAddress(dataPath + "employee.csv", dataPath + "employee_address.csv")) {
+        for(Employee employee: loadEmployeesWithAddresses(dataPath + "employee.csv", dataPath + "employee_address.csv")) {
             System.out.println(employee);
         }
         
