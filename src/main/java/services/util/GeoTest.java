@@ -26,9 +26,9 @@ import java.util.logging.Logger;
 */
 public class GeoTest {
 
-    final static String MA_CLÉ_GOOGLE_API = "AIzaSyAhf3JleYpal9S-xouJYH8lf7Dvz5Y2Nko";
+    final static String MA_CLÉ_GOOGLE_API = "AIzaSyALExqdz0iuPN31D5jsPUp7eYHyUnstYgA";
 
-    final static GeoApiContext MON_CONTEXTE_GEOAPI = new GeoApiContext.Builder().apiKey(MA_CLÉ_GOOGLE_API).build();
+    final static GeoApiContext MON_CONTEXTE_GEOAPI = new GeoApiContext.Builder().queryRateLimit(1000).apiKey(MA_CLÉ_GOOGLE_API).build();
 
     public static LatLng getLatLng(String adresse) {
         try {
@@ -41,6 +41,13 @@ public class GeoTest {
         }
     }
 
+    public static LatLng stringToLatLng(String coords) {
+        final String [] latlng = coords.split(",", 2);
+        final double lat = Double.parseDouble(latlng[0]);
+        final double lng = Double.parseDouble(latlng[1]);
+        return new LatLng(lat, lng);
+    }
+    
     public static double toRad(double angleInDegree) {
         return angleInDegree * Math.PI / 180.0;
     }
