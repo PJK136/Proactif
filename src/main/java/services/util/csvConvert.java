@@ -2,6 +2,7 @@ package services.util;
 
 import entities.Address;
 import entities.Client;
+import entities.Employee;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
@@ -23,11 +24,35 @@ public class csvConvert {
     
     public static List<Client> loadClientWithAddress(String clientFile, String addressFile) {
         
-    }
+    }*/
     
     public static List<Employee> loadEmployee(String employeeFile) {
-        
-    }*/
+        List<Employee> employees = new LinkedList<>();   
+        Iterable<CSVRecord> records = null;
+        try {
+            records = CSVParser.parse(Paths.get(employeeFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
+        } catch (IOException ex) {
+            Logger.getLogger(csvConvert.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        for (CSVRecord record : records) {
+            Employee employee = new Employee(
+                Boolean.parseBoolean(record.get("available")),
+                hourFormat.parse(record.get("workStart"), new ParsePosition(0)),
+                hourFormat.parse(record.get("workEnd"), new ParsePosition(0)),
+                record.get("honorific"),
+                record.get("firstName"),
+                record.get("lastName"),
+                dateFormat.parse(record.get("birthdate"), new ParsePosition(0)),
+                record.get("phoneNumber"),
+                record.get("email"),
+                null
+            );
+            employees.add(employee);                    
+        }
+        return employees; 
+    }
     
     public static List<Client> loadClient(String clientFile) {
         List<Client> clients = new LinkedList<>();   
@@ -92,9 +117,14 @@ public class csvConvert {
             System.out.println(address);
         }*/
         
-        System.out.println("------CLIENTS------");
+        /*System.out.println("------CLIENTS------");
         for(Client client: loadClient(dataPath + "client.csv")) {
             System.out.println(client);
+        }*/
+        
+        System.out.println("------EMPLOYEES------");
+        for(Employee employee: loadEmployee(dataPath + "employee.csv")) {
+            System.out.println(employee);
         }
         
         System.out.println("------END------");

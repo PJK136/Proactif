@@ -39,6 +39,8 @@ public class Employee extends Person {
     }
     
     
+    
+    
 
     public boolean isAvailable() {
         return available;
@@ -97,7 +99,9 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return "entities.Employee[ id=" + id + " ]";
+        return "Employee{" + super.toString() + "available=" + available + ", workStart=" + workStart + ", workEnd=" + workEnd + '}';
     }
+
+    
     
 }
