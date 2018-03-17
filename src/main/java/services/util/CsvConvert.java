@@ -17,7 +17,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 
-public class csvConvert {
+public class CsvConvert {
     public static List<Employee> loadEmployeesWithAddresses(String employeeFile, String addressFile) {
         List<Employee> employees = loadEmployees(employeeFile);
         List<Address> addresses = loadAddresses(addressFile);
@@ -50,7 +50,7 @@ public class csvConvert {
         try {
             records = CSVParser.parse(Paths.get(employeeFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
-            Logger.getLogger(csvConvert.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CsvConvert.class.getName()).log(Level.SEVERE, null, ex);
         }
         SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -78,7 +78,7 @@ public class csvConvert {
         try {
             records = CSVParser.parse(Paths.get(clientFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
-            Logger.getLogger(csvConvert.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CsvConvert.class.getName()).log(Level.SEVERE, null, ex);
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (CSVRecord record : records) {
@@ -102,7 +102,7 @@ public class csvConvert {
         try {
             records = CSVParser.parse(Paths.get(addressFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
-            Logger.getLogger(csvConvert.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CsvConvert.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (CSVRecord record : records) {
             Address address = new Address(
