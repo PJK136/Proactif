@@ -115,8 +115,8 @@ public class CsvConvert {
             final String geoCoords = record.get("geoCoords");
             address.setGeoCoords(
                     geoCoords.isEmpty()?
-                    GeoTest.getLatLng(address.getFullAddress()):
-                    GeoTest.stringToLatLng(geoCoords)
+                    GeoService.getLatLng(address.getFullAddress()):
+                    GeoService.stringToLatLng(geoCoords)
             );
             addresses.add(address);                    
         }

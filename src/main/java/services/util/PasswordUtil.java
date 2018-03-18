@@ -6,10 +6,6 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import java.nio.charset.Charset;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * This class provided utility methods to create and verify a hash of a password.

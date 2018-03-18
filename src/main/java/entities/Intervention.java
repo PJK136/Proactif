@@ -43,15 +43,9 @@ public class Intervention implements Serializable {
     public Intervention() {}
     
     public Intervention(String description, Date startDate, Client client) {
-        this.id = id;
-        this.version = version;
         this.description = description;
         this.startDate = startDate;
-        this.endDate = endDate;
-        this.comment = comment;
-        this.success = success;
         this.client = client;
-        this.employee = employee;
     }
     
     public Long getId() {

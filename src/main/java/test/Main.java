@@ -7,11 +7,9 @@ import entities.Employee;
 import entities.Intervention;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Date;
-import javafx.util.Pair;
 import services.Service;
-import services.util.GeoTest;
+import services.util.GeoService;
 
 /**
  *
@@ -34,13 +32,13 @@ public class Main {
         }
         //LatLng geolocalisation = new LatLng();
         Address addr1 = new Address("61 Avenue Roger Salengro", "", "69100", "Villeurbanne", "France");
-        addr1.setGeoCoords(GeoTest.getLatLng(addr1.getFullAddress()));
+        addr1.setGeoCoords(GeoService.getLatLng(addr1.getFullAddress()));
         Client c1 = new Client("Mr.", "Tristan", "Cadet", d1, "02 99 XX XX XX", "xxx@xxx.xx", addr1); 
         
         Service.register(c1, new char[]{'m', 'o', 'n', 'm', 'd', 'p'});
         
         Address addr2 = new Address("7 Avenue Jean Capelle Ouest", "", "69100", "Villeurbanne", "France");
-        addr2.setGeoCoords(GeoTest.getLatLng(addr2.getFullAddress()));
+        addr2.setGeoCoords(GeoService.getLatLng(addr2.getFullAddress()));
         
         SimpleDateFormat hours = new SimpleDateFormat("HH:mm:ss");
         Date workStart = null;

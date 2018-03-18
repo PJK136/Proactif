@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.ListIterator;
 import javax.persistence.RollbackException;
-import services.util.GeoTest;
+import services.util.GeoService;
 import services.util.PasswordUtil;
 
 /**
@@ -76,11 +76,11 @@ public final class Service {
         ListIterator<Employee> it = availableEmployees.listIterator();
         LatLng clientCoords = intervention.getClient().getAddress().getGeoCoords();
         Employee closest = null;
-        double distanceMin = GeoTest.getTripDurationByBicycleInKm(it.next().getAddress().getGeoCoords(), clientCoords);
+        double distanceMin = GeoService.getTripDurationByBicycleInKm(it.next().getAddress().getGeoCoords(), clientCoords);
         while(it.hasNext())
         {
            Employee cur = it.next(); 
-           double currentDistance = GeoTest.getTripDurationByBicycleInKm(cur.getAddress().getGeoCoords(), clientCoords);
+           double currentDistance = GeoService.getTripDurationByBicycleInKm(cur.getAddress().getGeoCoords(), clientCoords);
            if(distanceMin > currentDistance)
            {
                distanceMin = currentDistance;

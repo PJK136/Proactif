@@ -5,8 +5,8 @@
     <class>entities.Address</class>
     <class>entities.Person</class>
     <class>entities.Client</class>
-    <class>entities.Intervention</class>
     <class>entities.Employee</class>
+    <class>entities.Intervention</class>
     <class>entities.InterventionIncident</class>
     <class>entities.InterventionAnimal</class>
     <class>entities.InterventionLivraison</class>

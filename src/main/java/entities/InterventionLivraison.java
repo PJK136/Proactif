@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.util.Date;
@@ -16,23 +11,23 @@ import javax.persistence.Entity;
 @Entity
 public class InterventionLivraison extends Intervention {
 
-    private String object;
+    private String subject;
     private String company;
     
     public InterventionLivraison() {}
 
     public InterventionLivraison(String object, String company, String description, Date startDate, Client client) {
         super(description, startDate, client);
-        this.object = object;
+        this.subject = object;
         this.company = company;
     }
 
-    public String getObject() {
-        return object;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setObject(String object) {
-        this.object = object;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getCompany() {
@@ -46,7 +41,7 @@ public class InterventionLivraison extends Intervention {
     @Override
     public int hashCode() {
         int hash = super.hashCode();
-        hash = 79 * hash + Objects.hashCode(this.object);
+        hash = 79 * hash + Objects.hashCode(this.subject);
         hash = 79 * hash + Objects.hashCode(this.company);
         return hash;
     }
@@ -66,7 +61,7 @@ public class InterventionLivraison extends Intervention {
             return false;
         }
         final InterventionLivraison other = (InterventionLivraison) obj;
-        if (!Objects.equals(this.object, other.object)) {
+        if (!Objects.equals(this.subject, other.subject)) {
             return false;
         }
         if (!Objects.equals(this.company, other.company)) {
@@ -77,6 +72,6 @@ public class InterventionLivraison extends Intervention {
 
     @Override
     public String toString() {
-        return "InterventionLivraison{" + super.toString() + ", object=" + object + ", company=" + company + '}';
+        return "InterventionLivraison{" + super.toString() + ", subject=" + subject + ", company=" + company + '}';
     }
 }

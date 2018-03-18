@@ -24,7 +24,7 @@ import java.util.logging.Logger;
     <version>0.2.6</version>
 </dependency>
 */
-public class GeoTest {
+public class GeoService {
 
     final static String MA_CLÉ_GOOGLE_API = "AIzaSyALExqdz0iuPN31D5jsPUp7eYHyUnstYgA";
 
