@@ -8,6 +8,8 @@ import entities.Intervention;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.Service;
 import services.util.GeoService;
 
@@ -16,7 +18,8 @@ import services.util.GeoService;
  * @author tcadet
  */
 public class Main {
-
+    private final static Logger logger = LoggerFactory.getLogger(Main.class);
+    
     /**
      * @param args the command line arguments
      */
@@ -28,7 +31,7 @@ public class Main {
         try {
             d1 = sf.parse("04/11/1997");
         } catch (ParseException ex) {
-            ex.printStackTrace();
+            logger.error("", ex);
         }
         //LatLng geolocalisation = new LatLng();
         Address addr1 = new Address("61 Avenue Roger Salengro", "", "69100", "Villeurbanne", "France");
@@ -47,25 +50,25 @@ public class Main {
             workStart = hours.parse("10:00:00");
             workEnd = hours.parse("20:00:00");
         } catch (ParseException ex) {
-            ex.printStackTrace();
+            logger.error("", ex);
         }
         Employee e1 = new Employee(true, workStart, workEnd, "Mr.", "Tristan2", "Cadet", d1, "02 99 XX XX XX", "monmail@xxx.xx", addr2); 
         
         Service.register(e1, new char[]{'m', 'o', 'n', 'm', 'd', 'p'});
         
-        System.out.println(c1);
+        logger.info(c1.toString());
         
-        System.out.println(Service.login("xxx@xxx.xx", "aeilrfjsdlkj".toCharArray()));
-        System.out.println(Service.login("xxx@xxx.xx", "monmdp".toCharArray()));
+        logger.info(Service.login("xxx@xxx.xx", "aeilrfjsdlkj".toCharArray()) != null ? "Logged !" : "Can't login");
+        logger.info(Service.login("xxx@xxx.xx", "monmdp".toCharArray()) != null ? "Logged !" : "Can't login");
         
         
-        System.out.println("--------------INTERVENTION------------------");
+        logger.info("--------------INTERVENTION------------------");
         Intervention intervention = new Intervention("Une description", new Date(), c1);
         if(!Service.createAndAssignIntervention(intervention))
         {
-            System.out.println("RETURN FALSE");
+            logger.info("RETURN FALSE");
         }    
-        System.out.println(intervention);
+        logger.info(intervention.toString());
         
         JpaUtil.destroy();
     }

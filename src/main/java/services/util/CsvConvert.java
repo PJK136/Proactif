@@ -10,19 +10,20 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.LoggerFactory;
 
 
 public class CsvConvert {
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(CsvConvert.class);
+    
     public static List<Employee> loadEmployeesWithAddresses(String employeeFile, String addressFile) {
         List<Employee> employees = loadEmployees(employeeFile);
         List<Address> addresses = loadAddresses(addressFile);
         if(employees.size()!=addresses.size()) {
-            System.err.println("Échec, le nombre d'employés (="+employees.size()+") doit être égal au nombre d'adresses (="+addresses.size()+").");
+            logger.error("Échec, le nombre d'employés (="+employees.size()+") doit être égal au nombre d'adresses (="+addresses.size()+").");
             return null;
         }
         for(int i = 0; i<employees.size(); i++) {
@@ -35,7 +36,7 @@ public class CsvConvert {
         List<Client> clients = loadClients(clientFile);
         List<Address> addresses = loadAddresses(addressFile);
         if(clients.size()!=addresses.size()) {
-            System.err.println("Échec, le nombre de clients (="+clients.size()+") doit être égal au nombre d'adresses (="+addresses.size()+").");
+            logger.error("Échec, le nombre de clients (="+clients.size()+") doit être égal au nombre d'adresses (="+addresses.size()+").");
             return null;
         }
         for(int i = 0; i<clients.size(); i++) {
@@ -50,7 +51,7 @@ public class CsvConvert {
         try {
             records = CSVParser.parse(Paths.get(employeeFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
-            Logger.getLogger(CsvConvert.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("", ex);
         }
         SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -78,7 +79,7 @@ public class CsvConvert {
         try {
             records = CSVParser.parse(Paths.get(clientFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
-            Logger.getLogger(CsvConvert.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("", ex);
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (CSVRecord record : records) {
@@ -102,7 +103,7 @@ public class CsvConvert {
         try {
             records = CSVParser.parse(Paths.get(addressFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
-            Logger.getLogger(CsvConvert.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("", ex);
         }
         for (CSVRecord record : records) {
             Address address = new Address(
@@ -126,36 +127,36 @@ public class CsvConvert {
     public static void main(String[] args) {
         final String dataPath = "src/main/resources/mockData/";
        
-        /*System.out.println("------EMPLOYEE ADRESSES------");
+        /*logger.info("------EMPLOYEE ADRESSES------");
         for(Address address: loadAddresses(dataPath + "employee_address.csv")) {
-            System.out.println(address);
+            logger.info(address);
         }
-        System.out.println("------CLIENT ADRESSES------");
+        logger.info("------CLIENT ADRESSES------");
         for(Address address: loadAddresses(dataPath + "client_address.csv")) {
-            System.out.println(address);
+            logger.info(address);
         }
         
-        System.out.println("------CLIENTS------");
+        logger.info("------CLIENTS------");
         for(Client client: loadClients(dataPath + "client.csv")) {
-            System.out.println(client);
+            logger.info(client);
         }
         
-        System.out.println("------EMPLOYEES------");
+        logger.info("------EMPLOYEES------");
         for(Employee employee: loadEmployees(dataPath + "employee.csv")) {
-            System.out.println(employee);
+            logger.info(employee);
         }
         
-        System.out.println("------CLIENTS WITH ADDRESSES------");
+        logger.info("------CLIENTS WITH ADDRESSES------");
         for(Client client: loadClientsWithAddresses(dataPath + "client.csv", dataPath + "client_address.csv")) {
-            System.out.println(client);
+            logger.info(client);
         }*/
         
-        System.out.println("------EMPLOYEES WITH ADDRESSES------");
+        logger.info("------EMPLOYEES WITH ADDRESSES------");
         for(Employee employee: loadEmployeesWithAddresses(dataPath + "employee.csv", dataPath + "employee_address.csv")) {
-            System.out.println(employee);
+            logger.info(employee.toString());
         }
         
         
-        System.out.println("------END------");
+        logger.info("------END------");
     }
 }

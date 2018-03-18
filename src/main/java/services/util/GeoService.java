@@ -12,6 +12,7 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,6 +26,7 @@ import java.util.logging.Logger;
 </dependency>
 */
 public class GeoService {
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(GeoService.class);
 
     final static String MA_CLÉ_GOOGLE_API = "AIzaSyALExqdz0iuPN31D5jsPUp7eYHyUnstYgA";
 
@@ -125,7 +127,7 @@ public class GeoService {
 
         if (MA_CLÉ_GOOGLE_API.equals("XXXXXXXX-Moodle-Clé")) {
             for (int i=0; i<100; i++) {
-                System.err.println("[ERREUR] VOUS AVEZ OUBLIÉ DE CHANGER LA CLÉ DE L'API !!!!!");
+                logger.error("[ERREUR] VOUS AVEZ OUBLIÉ DE CHANGER LA CLÉ DE L'API !!!!!");
             }
             System.exit(-1);
         }
@@ -135,7 +137,7 @@ public class GeoService {
 
         String adresse1 = "7 Avenue Jean Capelle Ouest, Villeurbanne";
         LatLng coords1 = getLatLng(adresse1);
-        System.out.println("Lat/Lng de Adresse #1: " + coords1);
+        logger.info("Lat/Lng de Adresse #1: " + coords1);
 
         String adresse2 = "37 Avenue Jean Capelle Est, Villeurbanne";
         LatLng coords2 = getLatLng(adresse2);
@@ -143,12 +145,12 @@ public class GeoService {
         LatLng coords3 = getLatLng(adresse3);
 
         Double duree = getTripDurationByBicycleInMinute(coords1, coords3, coords2);
-        System.out.println("Durée de Trajet à Vélo de Adresse #1 à Adresse #3 en passant par Adresse #2: " + duree + " min");
+        logger.info("Durée de Trajet à Vélo de Adresse #1 à Adresse #3 en passant par Adresse #2: " + duree + " min");
 
         Double distance = getTripDistanceByCarInKm(coords1, coords3);
-        System.out.println("Distance en Voiture de Adresse #1 à Adresse #3 (trajet direct par la route): " + distance + " km");
+        logger.info("Distance en Voiture de Adresse #1 à Adresse #3 (trajet direct par la route): " + distance + " km");
 
         Double distanceVolDOiseau = getFlightDistanceInKm(coords1, coords3);
-        System.out.println("Distance à Vol d'Oiseau de Adresse #1 à Adresse #3 (distance géographique): " + distanceVolDOiseau + " km");
+        logger.info("Distance à Vol d'Oiseau de Adresse #1 à Adresse #3 (distance géographique): " + distanceVolDOiseau + " km");
     }
 }

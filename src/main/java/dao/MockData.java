@@ -7,9 +7,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 import services.util.CsvConvert;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MockData {
+   private final static Logger logger = LoggerFactory.getLogger(MockData.class);
+    
    final static String DATA_PATH = "src/main/resources/mockData/";
    final static int FLUSH_THRESHOLD = 1000;
    
@@ -69,18 +72,18 @@ public class MockData {
    
    public static void main(String[] args) {
        JpaUtil.init();
-       System.out.println("-----MOCK DATA START-----");
+       logger.info("-----MOCK DATA START-----");
        
-       /*System.out.println("-----INSERT EMPLOYEES-----");
-       System.out.println(insertEmployees());
+       /*logger.info("-----INSERT EMPLOYEES-----");
+       logger.info(insertEmployees());
        
-       System.out.println("-----INSERT CLIENTS-----");
-       System.out.println(insertClients());*/
+       logger.info("-----INSERT CLIENTS-----");
+       logger.info(insertClients());*/
        
-       System.out.println("-----INSERT ALL-----");
-       System.out.println(Arrays.toString(insertAll()));
+       logger.info("-----INSERT ALL-----");
+       logger.info(Arrays.toString(insertAll()));
        
-       System.out.println("-----MOCK DATA END-----");
+       logger.info("-----MOCK DATA END-----");
        JpaUtil.destroy();
    }
 }
