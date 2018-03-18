@@ -2,6 +2,7 @@ package dao;
 
 import entities.Client;
 import entities.Employee;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -23,7 +24,7 @@ public class MockData {
    public static boolean insertEmployees() {
         JpaUtil.createEntityManager();
         EntityManager em = JpaUtil.getEntityManager();
-        List<Employee> employees = CsvConvert.loadEmployeesWithAddresses(DATA_PATH + "employee.csv", DATA_PATH + "employee_address.csv");
+        List<Employee> employees = CsvConvert.loadEmployeesWithAddresses(Paths.get(DATA_PATH + "employee.csv"), Paths.get(DATA_PATH + "employee_address.csv"));
    
         JpaUtil.beginTransaction();
         for (int i = 0; i < employees.size(); i++) {
@@ -48,7 +49,7 @@ public class MockData {
    public static boolean insertClients() {
         JpaUtil.createEntityManager();
         EntityManager em = JpaUtil.getEntityManager();
-        List<Client> clients = CsvConvert.loadClientsWithAddresses(DATA_PATH + "client.csv", DATA_PATH + "client_address.csv");
+        List<Client> clients = CsvConvert.loadClientsWithAddresses(Paths.get(DATA_PATH + "client.csv"), Paths.get(DATA_PATH + "client_address.csv"));
    
         JpaUtil.beginTransaction();
         for (int i = 0; i < clients.size(); i++) {

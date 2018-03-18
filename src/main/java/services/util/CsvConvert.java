@@ -5,6 +5,7 @@ import entities.Client;
 import entities.Employee;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class CsvConvert {
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(CsvConvert.class);
     
-    public static List<Employee> loadEmployeesWithAddresses(String employeeFile, String addressFile) {
+    public static List<Employee> loadEmployeesWithAddresses(Path employeeFile, Path addressFile) {
         List<Employee> employees = loadEmployees(employeeFile);
         List<Address> addresses = loadAddresses(addressFile);
         if(employees.size()!=addresses.size()) {
@@ -32,7 +33,7 @@ public class CsvConvert {
         return employees;
     }
     
-    public static List<Client> loadClientsWithAddresses(String clientFile, String addressFile) {
+    public static List<Client> loadClientsWithAddresses(Path clientFile, Path addressFile) {
         List<Client> clients = loadClients(clientFile);
         List<Address> addresses = loadAddresses(addressFile);
         if(clients.size()!=addresses.size()) {
@@ -45,11 +46,11 @@ public class CsvConvert {
         return clients;
     }
     
-    public static List<Employee> loadEmployees(String employeeFile) {
+    public static List<Employee> loadEmployees(Path employeeFile) {
         List<Employee> employees = new LinkedList<>();   
         Iterable<CSVRecord> records = null;
         try {
-            records = CSVParser.parse(Paths.get(employeeFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
+            records = CSVParser.parse(employeeFile, StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
             logger.error("", ex);
         }
@@ -73,11 +74,11 @@ public class CsvConvert {
         return employees; 
     }
     
-    public static List<Client> loadClients(String clientFile) {
+    public static List<Client> loadClients(Path clientFile) {
         List<Client> clients = new LinkedList<>();   
         Iterable<CSVRecord> records = null;
         try {
-            records = CSVParser.parse(Paths.get(clientFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
+            records = CSVParser.parse(clientFile, StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
             logger.error("", ex);
         }
@@ -97,11 +98,11 @@ public class CsvConvert {
         return clients; 
     }
     
-    public static List<Address> loadAddresses(String addressFile) {        
+    public static List<Address> loadAddresses(Path addressFile) {        
         List<Address> addresses = new LinkedList<>();   
         Iterable<CSVRecord> records = null;
         try {
-            records = CSVParser.parse(Paths.get(addressFile), StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
+            records = CSVParser.parse(addressFile, StandardCharsets.UTF_8, CSVFormat.TDF.withFirstRecordAsHeader());
         } catch (IOException ex) {
             logger.error("", ex);
         }
@@ -152,7 +153,7 @@ public class CsvConvert {
         }*/
         
         logger.info("------EMPLOYEES WITH ADDRESSES------");
-        for(Employee employee: loadEmployeesWithAddresses(dataPath + "employee.csv", dataPath + "employee_address.csv")) {
+        for(Employee employee: loadEmployeesWithAddresses(Paths.get(dataPath + "employee.csv"), Paths.get(dataPath + "employee_address.csv"))) {
             logger.info(employee.toString());
         }
         
