@@ -1,8 +1,9 @@
 package entities;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -13,11 +14,11 @@ import javax.persistence.OneToMany;
 @Entity
 public class Client extends Person {
     
-    @OneToMany(mappedBy="client")
-    private List<Intervention> interventions;
+    @OneToMany(mappedBy="client", cascade=CascadeType.ALL)
+    protected List<Intervention> interventions;
 
     public List<Intervention> getInterventions() {
-        return interventions;
+        return Collections.unmodifiableList(interventions);
     }
     
     public Client() {}
@@ -26,34 +27,11 @@ public class Client extends Person {
         super(honorific, firstname, lastname, birthDate, phoneNumber, email, address);
     }
 
-    @Override
-    public int hashCode() {
-        int hash = super.hashCode();
-        hash = 11 * hash + Objects.hashCode(this.interventions);
-        return hash;
+    public void addIntervention(Intervention intervention) {
+        interventions.add(intervention);
+        intervention.setClient(this);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        if (!super.equals(obj)) {
-            return false;
-        }
-        final Client other = (Client) obj;
-        if (!Objects.equals(this.interventions, other.interventions)) {
-            return false;
-        }
-        return true;
-    }
-
+    
     @Override
     public String toString() {
         return "Client{" + super.toString() + ", interventions=" + interventions + '}';

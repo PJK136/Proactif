@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,18 +43,13 @@ public class Intervention implements Serializable {
     
     public Intervention() {}
     
-    public Intervention(String description, Date startDate, Client client) {
+    public Intervention(String description, Date startDate) {
         this.description = description;
         this.startDate = startDate;
-        this.client = client;
     }
     
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getVersion() {
@@ -104,7 +100,7 @@ public class Intervention implements Serializable {
         return client;
     }
 
-    public void setClient(Client client) {
+    protected void setClient(Client client) {
         this.client = client;
     }
 
@@ -112,16 +108,20 @@ public class Intervention implements Serializable {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    protected void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.version);
-        hash = 53 * hash + Objects.hashCode(this.client);
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.id);
+        hash = 11 * hash + Objects.hashCode(this.version);
+        hash = 11 * hash + Objects.hashCode(this.description);
+        hash = 11 * hash + Objects.hashCode(this.startDate);
+        hash = 11 * hash + Objects.hashCode(this.endDate);
+        hash = 11 * hash + Objects.hashCode(this.comment);
+        hash = 11 * hash + (this.success ? 1 : 0);
         return hash;
     }
 
@@ -137,13 +137,31 @@ public class Intervention implements Serializable {
             return false;
         }
         final Intervention other = (Intervention) obj;
+        if (this.success != other.success) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.comment, other.comment)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.version, other.version)) {
             return false;
         }
+        if (!Objects.equals(this.startDate, other.startDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.endDate, other.endDate)) {
+            return false;
+        }
         if (!Objects.equals(this.client, other.client)) {
+            return false;
+        }
+        if (!Objects.equals(this.employee, other.employee)) {
             return false;
         }
         return true;
@@ -151,7 +169,7 @@ public class Intervention implements Serializable {
 
     @Override
     public String toString() {
-        return "Intervention{" + "id=" + id + ", version=" + version + ", client=" + client + '}';
+        return "Intervention{" + "id=" + id + ", version=" + version + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", comment=" + comment + ", success=" + success + ", client=" + client.getId() + ", employee=" + employee.getId() + '}';
     }
 
 }

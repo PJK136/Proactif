@@ -1,6 +1,7 @@
 package test;
 
 import dao.JpaUtil;
+import dao.PersonDAO;
 import entities.Address;
 import entities.Client;
 import entities.Employee;
@@ -47,8 +48,8 @@ public class Main {
         Date workStart = null;
         Date workEnd = null;
         try {
-            workStart = hours.parse("10:00:00");
-            workEnd = hours.parse("20:00:00");
+            workStart = hours.parse("0:00:00");
+            workEnd = hours.parse("23:59:59");
         } catch (ParseException ex) {
             logger.error("", ex);
         }
@@ -62,13 +63,34 @@ public class Main {
         logger.info(Service.login("xxx@xxx.xx", "monmdp".toCharArray()) != null ? "Logged !" : "Can't login");
         
         
+        //JpaUtil.createEntityManager();
+        //c1 = (Client) PersonDAO.findById(1L);
+        //JpaUtil.closeEntityManager();
+        
         logger.info("--------------INTERVENTION------------------");
-        Intervention intervention = new Intervention("Une description", new Date(), c1);
-        if(!Service.createAndAssignIntervention(intervention))
+        Intervention intervention = new Intervention("Une description", new Date());
+        if(!Service.createAndAssignIntervention(intervention, c1))
         {
             logger.info("RETURN FALSE");
         }    
         logger.info(intervention.toString());
+        
+        logger.info("{}", intervention.getClient().getInterventions().size());
+        logger.info("{}", c1.getInterventions().size());
+        logger.info("{}", c1.getInterventions().toString());
+        logger.info("{}", c1.toString());
+        
+        JpaUtil.createEntityManager();
+        c1 = (Client) PersonDAO.findById(1L);
+        logger.info("{}", c1.getInterventions().size());
+        logger.info("{}", c1.getInterventions().toString());
+        JpaUtil.closeEntityManager();
+        
+        JpaUtil.createEntityManager();
+        e1 = (Employee) PersonDAO.findById(2L);
+        logger.info("{}", e1.getInterventions().size());
+        logger.info("{}", e1.getInterventions().toString());
+        JpaUtil.closeEntityManager();
         
         JpaUtil.destroy();
     }

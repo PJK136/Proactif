@@ -1,8 +1,10 @@
 package entities;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -20,7 +22,7 @@ public class Employee extends Person {
     Date workStart;
     @Temporal(TemporalType.TIME)
     Date workEnd;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy="employee", cascade=CascadeType.ALL)
     List<Intervention> interventions;
 
     public Employee(){}
@@ -57,7 +59,12 @@ public class Employee extends Person {
     }
 
     public List<Intervention> getInterventions() {
-        return interventions;
+        return Collections.unmodifiableList(interventions);
+    }
+    
+    public void addIntervention(Intervention intervention) {
+        interventions.add(intervention);
+        intervention.setEmployee(this);
     }
 
     @Override
@@ -66,7 +73,6 @@ public class Employee extends Person {
         hash = 83 * hash + (this.available ? 1 : 0);
         hash = 83 * hash + Objects.hashCode(this.workStart);
         hash = 83 * hash + Objects.hashCode(this.workEnd);
-        hash = 83 * hash + Objects.hashCode(this.interventions);
         return hash;
     }
 
@@ -91,15 +97,12 @@ public class Employee extends Person {
         if (!Objects.equals(this.workEnd, other.workEnd)) {
             return false;
         }
-        if (!Objects.equals(this.interventions, other.interventions)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Employee{" + super.toString() + "available=" + available + ", workStart=" + workStart + ", workEnd=" + workEnd + '}';
+        return "Employee{" + super.toString() + ", available=" + available + ", workStart=" + workStart + ", workEnd=" + workEnd + '}';
     }
     
 }

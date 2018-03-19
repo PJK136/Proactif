@@ -26,10 +26,18 @@ public class PersonDAO {
             }
         }
     }
-    
+
+    public static Person update(Person p) {
+        return JpaUtil.getEntityManager().merge(p);
+    }
+        
     public static Person findByEmail(String email) {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT p FROM Person p WHERE p.email = :email")
                 .setParameter("email", email);
         return (Person) query.getSingleResult();
+    }
+    
+    public static Person findById(Long id) {
+        return (Person) JpaUtil.getEntityManager().find(Person.class, id);
     }
 }

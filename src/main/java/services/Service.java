@@ -2,16 +2,17 @@ package services;
 
 import com.google.maps.model.LatLng;
 import dao.EmployeeDAO;
-import dao.InterventionDAO;
 import dao.JpaUtil;
 import dao.PersonDAO;
+import entities.Client;
 import entities.Employee;
 import entities.Intervention;
 import entities.Person;
 import java.nio.charset.Charset;
 import java.util.List;
-import java.util.ListIterator;
 import javax.persistence.RollbackException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.util.GeoService;
 import services.util.PasswordUtil;
 
@@ -20,18 +21,18 @@ import services.util.PasswordUtil;
  * @author tcadet
  */
 public final class Service {
+    private final static Logger logger = LoggerFactory.getLogger(Service.class);
     public static Charset CHARSET = Charset.forName("UTF-8");
     
     private Service() {}
     
-    public static boolean register(Person p, char[] password) {
-        p.setPasswordHash(PasswordUtil.hash(password, CHARSET));
-        
-        JpaUtil.createEntityManager();
-        JpaUtil.beginTransaction();
-        PersonDAO.create(p);
+    public static boolean register(Person p, char[] password) {       
         try 
         {
+            JpaUtil.createEntityManager();
+            JpaUtil.beginTransaction();
+            PersonDAO.create(p);
+            p.setPasswordHash(PasswordUtil.hash(password, CHARSET));
             JpaUtil.commitTransaction();
             return true;
         }
@@ -63,37 +64,39 @@ public final class Service {
         return null;
     }
     
-    public static boolean createAndAssignIntervention(Intervention intervention) 
+    public static boolean createAndAssignIntervention(Intervention intervention, Client client) 
     {
-        JpaUtil.createEntityManager();
-        List<Employee> availableEmployees = EmployeeDAO.getAllAvailable();
-        if(availableEmployees.isEmpty())
-        {   //Aucun employé disponible
-            JpaUtil.closeEntityManager();
-            return false;
-        } 
-        
-        ListIterator<Employee> it = availableEmployees.listIterator();
-        LatLng clientCoords = intervention.getClient().getAddress().getGeoCoords();
-        Employee closest = null;
-        double distanceMin = GeoService.getTripDurationByBicycleInKm(it.next().getAddress().getGeoCoords(), clientCoords);
-        while(it.hasNext())
-        {
-           Employee cur = it.next(); 
-           double currentDistance = GeoService.getTripDurationByBicycleInKm(cur.getAddress().getGeoCoords(), clientCoords);
-           if(distanceMin > currentDistance)
-           {
-               distanceMin = currentDistance;
-               closest = cur; 
-           }    
-        }
-        
-        intervention.setEmployee(closest);
-        JpaUtil.beginTransaction();
-        InterventionDAO.create(intervention);
-      
         try 
         {
+            JpaUtil.createEntityManager();
+            JpaUtil.beginTransaction();
+
+            List<Employee> availableEmployees = EmployeeDAO.getAllAvailable();
+            if(availableEmployees.isEmpty())
+            {   //Aucun employé disponible
+                logger.warn("Aucun employé n'est disponible pour {}", intervention);
+                return false;
+            }
+
+            LatLng clientCoords = client.getAddress().getGeoCoords();
+            Employee closest = null;
+            double distanceMin = Double.MAX_VALUE;
+
+            for (Employee employee : availableEmployees) {
+                double currentDistance = GeoService.getTripDurationByBicycleInKm(employee.getAddress().getGeoCoords(), clientCoords);
+                if(distanceMin > currentDistance)
+                {
+                    distanceMin = currentDistance;
+                    closest = employee; 
+                }    
+            }
+
+            closest.addIntervention(intervention);
+            client.addIntervention(intervention);
+            
+            //Avec cascade, pas besoin de créer intervention
+            client = (Client) PersonDAO.update(client);
+
             JpaUtil.commitTransaction();
             return true;
         } 

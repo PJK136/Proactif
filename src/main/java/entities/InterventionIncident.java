@@ -12,8 +12,8 @@ public class InterventionIncident extends Intervention {
 
     public InterventionIncident() {}
 
-    public InterventionIncident(String description, Date startDate, Client client) {
-        super(description, startDate, client);
+    public InterventionIncident(String description, Date startDate) {
+        super(description, startDate);
     }
     
     @Override

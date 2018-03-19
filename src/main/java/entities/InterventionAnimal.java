@@ -15,8 +15,8 @@ public class InterventionAnimal extends Intervention {
 
     public InterventionAnimal() {}
 
-    public InterventionAnimal(String animal, String description, Date startDate, Client client) {
-        super(description, startDate, client);
+    public InterventionAnimal(String animal, String description, Date startDate) {
+        super(description, startDate);
         this.animal = animal;
     }
 
