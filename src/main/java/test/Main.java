@@ -12,6 +12,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.Service;
+import services.util.EmailSender;
 import services.util.GeoService;
 
 /**
@@ -92,6 +93,7 @@ public class Main {
         logger.info("{}", e1.getInterventions().toString());
         JpaUtil.closeEntityManager();
         
+        EmailSender.send("me@google.com", "you@facebook.com", "Test", "Hello !\nHow are you ?");
         JpaUtil.destroy();
     }
     
