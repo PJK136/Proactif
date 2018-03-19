@@ -10,10 +10,10 @@ import javax.persistence.RollbackException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MockData {
-   private final static Logger logger = LoggerFactory.getLogger(MockData.class);
+public final class MockData {
+    private final static Logger logger = LoggerFactory.getLogger(MockData.class);
     
-   final static String DATA_PATH = "src/main/resources/mockData/";
+    final static String DATA_PATH = "src/main/resources/mockData/";
    
     public static boolean[] insertAll() {
         return new boolean[] {insertEmployees(), insertClients()};

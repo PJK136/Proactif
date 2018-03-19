@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
     <version>0.2.6</version>
 </dependency>
 */
-public class GeoService {
+public final class GeoService {
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(GeoService.class);
 
     final static String MA_CLÉ_GOOGLE_API = "AIzaSyALExqdz0iuPN31D5jsPUp7eYHyUnstYgA";
