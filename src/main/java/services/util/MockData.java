@@ -1,12 +1,12 @@
-package dao;
+package services.util;
 
+import dao.JpaUtil;
+import dao.PersonDAO;
 import entities.Person;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
-import services.util.CsvConvert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,6 @@ public class MockData {
    private final static Logger logger = LoggerFactory.getLogger(MockData.class);
     
    final static String DATA_PATH = "src/main/resources/mockData/";
-   final static int FLUSH_THRESHOLD = 1000;
    
     public static boolean[] insertAll() {
         return new boolean[] {insertEmployees(), insertClients()};
@@ -30,15 +29,9 @@ public class MockData {
      
     public static boolean insertPersons(List<? extends Person> persons) {
         JpaUtil.createEntityManager();
-        EntityManager em = JpaUtil.getEntityManager();
         JpaUtil.beginTransaction();
-        for (int i = 0; i < persons.size(); i++) {
-            PersonDAO.create(persons.get(i));
-            if ((i % FLUSH_THRESHOLD) == 0) {
-                em.flush();
-                em.clear();
-            }
-        }
+        
+        PersonDAO.create(persons);
         
         try {
             JpaUtil.commitTransaction();
