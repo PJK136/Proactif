@@ -13,7 +13,7 @@ public class InterventionDAO {
         JpaUtil.getEntityManager().persist(intervention);
     }
     
-    public static void merge(Intervention intervention) {
+    public static void update(Intervention intervention) {
         JpaUtil.getEntityManager().merge(intervention);            
     }
     

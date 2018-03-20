@@ -161,7 +161,7 @@ public final class Service {
         try {
             JpaUtil.createEntityManager();
             JpaUtil.beginTransaction();
-            InterventionDAO.merge(intervention);
+            InterventionDAO.update(intervention);
             JpaUtil.commitTransaction();
         } catch (RollbackException ex) {
             JpaUtil.rollbackTransaction();

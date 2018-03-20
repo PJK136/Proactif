@@ -1,7 +1,6 @@
 package test;
 
 import dao.JpaUtil;
-import dao.PersonDAO;
 import entities.Address;
 import entities.Client;
 import entities.Employee;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.Service;
 import services.util.EmailSender;
-import services.util.GeoService;
 
 /**
  *
@@ -60,6 +58,7 @@ public class Main {
         Service.register(e1, new char[]{'m', 'o', 'n', 'm', 'd', 'p'});
         
         logger.info(c1.toString());
+        logger.info(e1.toString());
         
         logger.info(Service.login("xxx@xxx.xx", "aeilrfjsdlkj".toCharArray()) != null ? "Logged !" : "Can't login");
         logger.info(Service.login("xxx@xxx.xx", "monmdp".toCharArray()) != null ? "Logged !" : "Can't login");
@@ -84,10 +83,13 @@ public class Main {
         try {
             Service.fillAttestation(intervention);
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("{}", ex);
         }
         logger.info(intervention.toString());
         
+        
+        logger.info("{}", Service.getInterventionsByClient(c1.getId()));
+        logger.info("{}", Service.getInterventionsToDoByEmployee(e1.getId()));
         
         EmailSender.send("me@google.com", "you@facebook.com", "Test", "Hello !\nHow are you ?");
         JpaUtil.destroy();
