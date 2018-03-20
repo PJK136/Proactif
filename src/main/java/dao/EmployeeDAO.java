@@ -16,4 +16,8 @@ public class EmployeeDAO {
         return (List<Employee>) query.getResultList();
     }
     
+    public static void update(Employee employee) {        
+        JpaUtil.getEntityManager().merge(employee); 
+    }
+    
 }

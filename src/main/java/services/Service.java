@@ -117,6 +117,8 @@ public final class Service {
             intervention.setDistance(distanceMin);
             
             InterventionDAO.create(intervention);
+            closest.setAvailable(false);
+            EmployeeDAO.update(closest);
             JpaUtil.commitTransaction();
             NotificationSender.sendInterventionNeeded(intervention);
             return true;
@@ -162,7 +164,10 @@ public final class Service {
             JpaUtil.createEntityManager();
             JpaUtil.beginTransaction();
             InterventionDAO.update(intervention);
+            intervention.getEmployee().setAvailable(true);
+            EmployeeDAO.update(intervention.getEmployee());
             JpaUtil.commitTransaction();
+            NotificationSender.sendAttestationFilled(intervention);
         } catch (RollbackException ex) {
             JpaUtil.rollbackTransaction();
             String msg = ex.getLocalizedMessage();
