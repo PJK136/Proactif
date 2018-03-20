@@ -16,6 +16,7 @@ import java.util.List;
 import javax.persistence.RollbackException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import services.util.EmailSender;
 import services.util.GeoService;
 import services.util.PasswordUtil;
 
@@ -44,11 +45,13 @@ public final class Service {
             
             PersonDAO.create(p);
             JpaUtil.commitTransaction();
+            EmailSender.sendRegistrationConfirmation(p);
             return true;
         }
         catch(RollbackException e) 
         {
             JpaUtil.rollbackTransaction(); 
+            EmailSender.sendRegistrationFailure(p);
             return false;
         }
         finally
