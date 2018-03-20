@@ -32,4 +32,6 @@ public final class EmailSender {
                     + "Votre inscription au service Proact'IF a malencontreusement échoué… "
                     + "Merci de recommencer ultérieusement.");
     }
+    
+    
 }

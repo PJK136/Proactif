@@ -1,6 +1,7 @@
 package services.util;
 
 import entities.Client;
+import entities.Employee;
 import entities.Intervention;
 import entities.Person;
 import java.util.Date;
@@ -28,5 +29,15 @@ public class NotificationSender {
                     + " pour " + client.getFirstName() + " " + client.getLastName()
                     + " (#" + client.getId() + "), " + client.getAddress().getFullAddress()
                     + " (" + Math.round(intervention.getDistance()*10)/10. + " km) : " + intervention.getDescription());
+    }
+    
+    public static boolean sendAttestationFilled(Intervention intervention) {
+        Employee employee = intervention.getEmployee();
+        return send(intervention.getClient(),
+                    "Intervention " + intervention.getType()
+                    + " demandée le " + intervention.getStartDate()
+                    + " effectuée par " + employee.getFirstName() + " " + employee.getLastName()
+                    + " s'est soldée par un " + (intervention.isSuccess()?"succès":"échec") + "." 
+                    + (intervention.getComment()==null? "" : "\nCommentaire : " + intervention.getComment()));
     }
 }
