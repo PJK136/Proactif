@@ -37,12 +37,17 @@ public final class Service {
             JpaUtil.createEntityManager();
             JpaUtil.beginTransaction();
             p.setPasswordHash(PasswordUtil.hash(password, CHARSET));
-            LatLng coords = GeoService.getLatLng(p.getAddress().getFullAddress());
             
-            if (coords != null)
-                p.getAddress().setGeoCoords(coords);
-            else
-                return false;
+            if (p.getAddress().getGeoCoords() == null) {
+                LatLng coords = GeoService.getLatLng(p.getAddress().getFullAddress());
+            
+                if (coords != null)
+                    p.getAddress().setGeoCoords(coords);
+                else {
+                    logger.error("Impossible de géolocaliser {}", p);
+                    return false;
+                }
+            }
             
             PersonDAO.create(p);
             JpaUtil.commitTransaction();

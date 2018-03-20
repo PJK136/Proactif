@@ -39,6 +39,7 @@ public final class GeoService {
             return results[0].geometry.location;
 
         } catch (Exception ex) {
+            logger.error("{}", ex);
             return null;
         }
     }
@@ -113,6 +114,7 @@ public final class GeoService {
             }
 
         } catch (Exception ex) {
+            logger.error("{}", ex);
             return null;
         }
 
