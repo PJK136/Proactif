@@ -31,7 +31,7 @@ public class Address implements Serializable {
 
     public String getFullAddress()
     {
-        return address1 + " " + zipCode + " " + city + " " + country;
+        return address1 + ", " + zipCode + " " + city + ", " + country;
     }        
     
     public String getAddress1() {

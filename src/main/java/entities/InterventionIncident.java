@@ -15,7 +15,12 @@ public class InterventionIncident extends Intervention {
     public InterventionIncident(String description, Date startDate) {
         super(description, startDate);
     }
-    
+
+    @Override
+    public String getType() {
+        return "Incident";
+    }
+
     @Override
     public String toString() {
         return "InterventionIncident{"  + super.toString() + '}';

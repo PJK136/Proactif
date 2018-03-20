@@ -20,6 +20,11 @@ public class InterventionAnimal extends Intervention {
         this.animal = animal;
     }
 
+    @Override
+    public String getType() {
+        return "Animal";
+    }
+
     public String getAnimal() {
         return animal;
     }

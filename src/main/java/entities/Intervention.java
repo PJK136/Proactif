@@ -41,6 +41,7 @@ public class Intervention implements Serializable {
     protected Client client;
     @ManyToOne(fetch = FetchType.LAZY)
     protected Employee employee;
+    protected Double distance;
     
     public Intervention() {}
     
@@ -55,6 +56,10 @@ public class Intervention implements Serializable {
 
     public Long getVersion() {
         return version;
+    }
+    
+    public String getType() {
+        return "Générique";
     }
 
     public String getDescription() {
@@ -111,6 +116,14 @@ public class Intervention implements Serializable {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 
     @Override

@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.util.EmailSender;
 import services.util.GeoService;
+import services.util.NotificationSender;
 import services.util.PasswordUtil;
 
 /**
@@ -108,10 +109,11 @@ public final class Service {
             
             intervention.setClient(client);
             intervention.setEmployee(closest);
+            intervention.setDistance(distanceMin);
             
             InterventionDAO.create(intervention);
-
             JpaUtil.commitTransaction();
+            NotificationSender.sendInterventionNeeded(intervention);
             return true;
         } 
         catch(RollbackException e) 

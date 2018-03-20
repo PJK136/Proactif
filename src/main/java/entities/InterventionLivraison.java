@@ -22,6 +22,11 @@ public class InterventionLivraison extends Intervention {
         this.company = company;
     }
 
+    @Override
+    public String getType() {
+        return "Livraison";
+    }
+
     public String getSubject() {
         return subject;
     }
