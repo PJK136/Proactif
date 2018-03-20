@@ -9,6 +9,7 @@ import entities.Intervention;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.Service;
@@ -75,6 +76,18 @@ public class Main {
             logger.info("RETURN FALSE");
         }    
         logger.info(intervention.toString());
+        
+        
+        logger.info("--------------fillAttestation------------------");
+        intervention.setSuccess(true);
+        intervention.setComment("Fini sans problèmes !");
+        try {
+            Service.fillAttestation(intervention);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        logger.info(intervention.toString());
+        
         
         EmailSender.send("me@google.com", "you@facebook.com", "Test", "Hello !\nHow are you ?");
         JpaUtil.destroy();

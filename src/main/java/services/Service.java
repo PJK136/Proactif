@@ -5,11 +5,13 @@ import dao.EmployeeDAO;
 import dao.InterventionDAO;
 import dao.JpaUtil;
 import dao.PersonDAO;
+import dao.exceptions.NonexistentEntityException;
 import entities.Client;
 import entities.Employee;
 import entities.Intervention;
 import entities.Person;
 import java.nio.charset.Charset;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.RollbackException;
 import org.slf4j.Logger;
@@ -118,5 +120,29 @@ public final class Service {
         {
             JpaUtil.closeEntityManager();
         } 
-    }        
+    }
+    
+    public static void fillAttestation(Intervention intervention) throws NonexistentEntityException, Exception {
+        if(intervention.getEndDate() == null) {
+            intervention.setEndDate(new Date());
+        }
+        try {
+            JpaUtil.createEntityManager();
+            JpaUtil.beginTransaction();
+            InterventionDAO.merge(intervention);
+            JpaUtil.commitTransaction();
+        } catch (RollbackException ex) {
+            JpaUtil.rollbackTransaction();
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Long id = intervention.getId();
+                if (InterventionDAO.find(id) == null) {
+                    throw new NonexistentEntityException("The intervention with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            JpaUtil.closeEntityManager();
+        }
+    }
 }
