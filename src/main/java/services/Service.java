@@ -143,6 +143,17 @@ public final class Service {
         }
     }
 
+    public static List<Intervention> getInterventionsToDoByEmployee(long employeeId) {
+        JpaUtil.createEntityManager();
+        try {
+            return InterventionDAO.findInterventionsToDoByEmployee(employeeId);
+        }
+        finally
+        {
+            JpaUtil.closeEntityManager();
+        }
+    }
+
     public static void fillAttestation(Intervention intervention) throws NonexistentEntityException, Exception {
         if(intervention.getEndDate() == null) {
             intervention.setEndDate(new Date());
@@ -164,6 +175,6 @@ public final class Service {
             throw ex;
         } finally {
             JpaUtil.closeEntityManager();
-        } 
-    }        
+        }
+    }
 }
