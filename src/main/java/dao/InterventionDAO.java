@@ -21,6 +21,12 @@ public class InterventionDAO {
         return JpaUtil.getEntityManager().find(Intervention.class, id);
     }
     
+    public static List<Intervention> findInterventionsByClient(long clientId) {
+        Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.client.id = :id")
+        .setParameter("id", clientId);
+        return (List<Intervention>) query.getResultList();
+    }
+
     public static List<Intervention> getFinishedInterventionsByEmployee(Long employeeId) {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.employee.id = :employeeId")
                 .setParameter("employeeId", employeeId);
