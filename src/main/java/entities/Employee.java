@@ -22,8 +22,6 @@ public class Employee extends Person {
     Date workStart;
     @Temporal(TemporalType.TIME)
     Date workEnd;
-    @OneToMany(mappedBy="employee", cascade=CascadeType.ALL)
-    List<Intervention> interventions;
 
     public Employee(){}
     
@@ -56,15 +54,6 @@ public class Employee extends Person {
 
     public void setWorkEnd(Date workEnd) {
         this.workEnd = workEnd;
-    }
-
-    public List<Intervention> getInterventions() {
-        return Collections.unmodifiableList(interventions);
-    }
-    
-    public void addIntervention(Intervention intervention) {
-        interventions.add(intervention);
-        intervention.setEmployee(this);
     }
 
     @Override

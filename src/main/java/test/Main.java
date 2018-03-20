@@ -70,28 +70,11 @@ public class Main {
         
         logger.info("--------------INTERVENTION------------------");
         Intervention intervention = new Intervention("Une description", new Date());
-        if(!Service.createAndAssignIntervention(intervention, c1))
+        if(!Service.createAndAssignIntervention(intervention, c1.getId()))
         {
             logger.info("RETURN FALSE");
         }    
         logger.info(intervention.toString());
-        
-        logger.info("{}", intervention.getClient().getInterventions().size());
-        logger.info("{}", c1.getInterventions().size());
-        logger.info("{}", c1.getInterventions().toString());
-        logger.info("{}", c1.toString());
-        
-        JpaUtil.createEntityManager();
-        c1 = (Client) PersonDAO.findById(1L);
-        logger.info("{}", c1.getInterventions().size());
-        logger.info("{}", c1.getInterventions().toString());
-        JpaUtil.closeEntityManager();
-        
-        JpaUtil.createEntityManager();
-        e1 = (Employee) PersonDAO.findById(2L);
-        logger.info("{}", e1.getInterventions().size());
-        logger.info("{}", e1.getInterventions().toString());
-        JpaUtil.closeEntityManager();
         
         EmailSender.send("me@google.com", "you@facebook.com", "Test", "Hello !\nHow are you ?");
         JpaUtil.destroy();

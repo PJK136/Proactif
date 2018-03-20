@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,9 +37,9 @@ public class Intervention implements Serializable {
     protected Date endDate;
     protected String comment;
     protected boolean success;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     protected Client client;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     protected Employee employee;
     
     public Intervention() {}
@@ -100,7 +101,7 @@ public class Intervention implements Serializable {
         return client;
     }
 
-    protected void setClient(Client client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 
@@ -108,7 +109,7 @@ public class Intervention implements Serializable {
         return employee;
     }
 
-    protected void setEmployee(Employee employee) {
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 

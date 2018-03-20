@@ -2,6 +2,7 @@ package services;
 
 import com.google.maps.model.LatLng;
 import dao.EmployeeDAO;
+import dao.InterventionDAO;
 import dao.JpaUtil;
 import dao.PersonDAO;
 import entities.Client;
@@ -64,13 +65,15 @@ public final class Service {
         return null;
     }
     
-    public static boolean createAndAssignIntervention(Intervention intervention, Client client) 
+    public static boolean createAndAssignIntervention(Intervention intervention, long clientId) 
     {
         try 
         {
             JpaUtil.createEntityManager();
             JpaUtil.beginTransaction();
 
+            Client client = (Client) PersonDAO.findById(clientId);
+            
             List<Employee> availableEmployees = EmployeeDAO.getAllAvailable();
             if(availableEmployees.isEmpty())
             {   //Aucun employé disponible
@@ -90,12 +93,11 @@ public final class Service {
                     closest = employee; 
                 }    
             }
-
-            closest.addIntervention(intervention);
-            client.addIntervention(intervention);
             
-            //Avec cascade, pas besoin de créer intervention
-            client = (Client) PersonDAO.update(client);
+            intervention.setClient(client);
+            intervention.setEmployee(closest);
+            
+            InterventionDAO.create(intervention);
 
             JpaUtil.commitTransaction();
             return true;
