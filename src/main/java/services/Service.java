@@ -32,8 +32,15 @@ public final class Service {
         {
             JpaUtil.createEntityManager();
             JpaUtil.beginTransaction();
-            PersonDAO.create(p);
             p.setPasswordHash(PasswordUtil.hash(password, CHARSET));
+            LatLng coords = GeoService.getLatLng(p.getAddress().getFullAddress());
+            
+            if (coords != null)
+                p.getAddress().setGeoCoords(coords);
+            else
+                return false;
+            
+            PersonDAO.create(p);
             JpaUtil.commitTransaction();
             return true;
         }
