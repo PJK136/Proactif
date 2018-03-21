@@ -128,27 +128,27 @@ public final class CsvConvert {
         final String dataPath = "src/main/resources/mockData/";
        
         /*logger.info("------EMPLOYEE ADRESSES------");
-        for(Address address: loadAddresses(dataPath + "employee_address.csv")) {
-            logger.info(address);
+        for(Address address: loadAddresses(Paths.get(dataPath + "employee_address.csv"))) {
+            logger.info(address.toString());
         }
         logger.info("------CLIENT ADRESSES------");
-        for(Address address: loadAddresses(dataPath + "client_address.csv")) {
-            logger.info(address);
+        for(Address address: loadAddresses(Paths.get(dataPath + "client_address.csv"))) {
+            logger.info(address.toString());
         }
         
         logger.info("------CLIENTS------");
-        for(Client client: loadClients(dataPath + "client.csv")) {
-            logger.info(client);
+        for(Client client: loadClients(Paths.get(dataPath + "client.csv"))) {
+            logger.info(client.toString());
         }
         
         logger.info("------EMPLOYEES------");
-        for(Employee employee: loadEmployees(dataPath + "employee.csv")) {
-            logger.info(employee);
+        for(Employee employee: loadEmployees(Paths.get(dataPath + "employee.csv"))) {
+            logger.info(employee.toString());
         }
         
         logger.info("------CLIENTS WITH ADDRESSES------");
-        for(Client client: loadClientsWithAddresses(dataPath + "client.csv", dataPath + "client_address.csv")) {
-            logger.info(client);
+        for(Client client: loadClientsWithAddresses(Paths.get(dataPath + "client.csv"), Paths.get(dataPath + "client_address.csv"))) {
+            logger.info(client.toString());
         }*/
         
         logger.info("------EMPLOYEES WITH ADDRESSES------");
