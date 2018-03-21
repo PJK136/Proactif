@@ -206,7 +206,7 @@ public final class Service {
         }
     }
 
-    public static void fillAttestation(Intervention intervention) throws NonexistentEntityException, Exception {
+    public static void fillAttestation(Intervention intervention) throws NonexistentEntityException {
         if(intervention.getEndDate() == null) {
             intervention.setEndDate(new Date());
         }
