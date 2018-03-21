@@ -27,14 +27,14 @@ public class InterventionDAO {
         return (List<Intervention>) query.getResultList();
     }
 
-    public static List<Intervention> findInterventionsToDoByEmployee(long employeeId) {
+    public static Intervention findInterventionToDoByEmployee(long employeeId) {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.endDate = NULL AND i.employee.id = :id")
         .setParameter("id", employeeId);
-        return (List<Intervention>) query.getResultList();
+        return (Intervention) query.getSingleResult();
     }
 
-    public static List<Intervention> getFinishedInterventionsByEmployee(Long employeeId) {
-        Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.employee.id = :employeeId")
+    public static List<Intervention> findFinishedInterventionsByEmployee(Long employeeId) {
+        Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.endDate != NULL AND i.employee.id = :employeeId")
                 .setParameter("employeeId", employeeId);
         return (List<Intervention>) query.getResultList();
     }

@@ -40,6 +40,7 @@ public class Main {
         Client c1 = new Client("Mr.", "Tristan", "Cadet", d1, "02 99 XX XX XX", "xxx@xxx.xx", addr1); 
         
         Service.register(c1, new char[]{'m', 'o', 'n', 'm', 'd', 'p'});
+        Service.register(c1, new char[]{'m', 'o', 'n', 'm', 'd', 'p'});
         
         Address addr2 = new Address("7 Avenue Jean Capelle Ouest", "", "69100", "Villeurbanne", "France");
         //addr2.setGeoCoords(GeoService.getLatLng(addr2.getFullAddress()));
@@ -88,7 +89,7 @@ public class Main {
         logger.info(intervention.toString());
         
         
-        logger.info("{}", Service.getInterventionsByClient(c1.getId()));
+        logger.info("{}", Service.getInterventionByClient(c1.getId()));
         logger.info("{}", Service.getInterventionsToDoByEmployee(e1.getId()));
         
         EmailSender.send("me@google.com", "you@facebook.com", "Test", "Hello !\nHow are you ?");

@@ -56,7 +56,7 @@ public final class Service {
         }
         catch(RollbackException e) 
         {
-            JpaUtil.rollbackTransaction(); 
+            JpaUtil.rollbackTransaction();
             EmailSender.sendRegistrationFailure(p);
             return false;
         }
@@ -145,10 +145,21 @@ public final class Service {
         }
     }
 
-    public static List<Intervention> getInterventionsToDoByEmployee(long employeeId) {
+    public static Intervention getInterventionToDoByEmployee(long employeeId) {
         JpaUtil.createEntityManager();
         try {
-            return InterventionDAO.findInterventionsToDoByEmployee(employeeId);
+            return InterventionDAO.findInterventionToDoByEmployee(employeeId);
+        }
+        finally
+        {
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public static List<Intervention> getFinishedInterventionsByEmployee(long employeeId) {
+        JpaUtil.createEntityManager();
+        try {
+            return InterventionDAO.findFinishedInterventionsByEmployee(employeeId);
         }
         finally
         {
