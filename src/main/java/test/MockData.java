@@ -1,14 +1,15 @@
-package services.util;
+package test;
 
 import dao.JpaUtil;
-import dao.PersonDAO;
 import entities.Person;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.RollbackException;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import services.Service;
+import services.util.CsvConvert;
 
 public final class MockData {
     private final static Logger logger = LoggerFactory.getLogger(MockData.class);
@@ -28,18 +29,12 @@ public final class MockData {
     }
      
     public static boolean insertPersons(List<? extends Person> persons) {
-        JpaUtil.createEntityManager();
-        JpaUtil.beginTransaction();
-        
-        PersonDAO.create(persons);
-        
-        try {
-            JpaUtil.commitTransaction();
-        } catch(RollbackException e) {
-            JpaUtil.rollbackTransaction(); 
-            return false;
-        } finally {
-            JpaUtil.closeEntityManager();
+        for (Person person : persons) {
+            if (person.getAddress().getGeoCoords() == null) {
+                logger.error("Does not have geocoordinates !");
+                continue;
+            }
+            Service.register(person, UUID.randomUUID().toString().toCharArray());
         }
         return true;
     }

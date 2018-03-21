@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
  * The hash creation method return a hash with all information in order to allow the application that need to verify the hash to be in a full stateless mode.
  */
 public final class PasswordUtil {
-    private final static int ITERATIONS = 40;
+    private final static int ITERATIONS = 1; //À augmenter pour améliorer la sécurité
     private final static int MEMORY = 128000;
     private final static int PARALLELISM = 4;
     

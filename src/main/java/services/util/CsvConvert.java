@@ -116,11 +116,9 @@ public final class CsvConvert {
                 record.get("country")
             );
             final String geoCoords = record.get("geoCoords");
-            address.setGeoCoords(
-                    geoCoords.isEmpty()?
-                    GeoService.getLatLng(address.getFullAddress()):
-                    GeoService.stringToLatLng(geoCoords)
-            );
+            if (!geoCoords.isEmpty()) {
+                address.setGeoCoords(GeoService.stringToLatLng(geoCoords));
+            }
             addresses.add(address);                    
         }
         return addresses;
