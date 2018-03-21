@@ -91,6 +91,8 @@ public class Main {
         
         logger.info("{}", Service.getInterventionsByClient(c1.getId()));
         logger.info("{}", Service.getInterventionToDoByEmployee(e1.getId()));
+        logger.info("{}", Service.getInterventionsByDay(new Date()));
+        logger.info("{}", Service.resetPassword("xxx@xxx.xx"));
         
         EmailSender.send("me@google.com", "you@facebook.com", "Test", "Hello !\nHow are you ?");
         JpaUtil.destroy();

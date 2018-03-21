@@ -13,6 +13,7 @@ import entities.Person;
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.RollbackException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +84,33 @@ public final class Service {
         return null;
     }
     
+    public static boolean resetPassword(String email) {
+        JpaUtil.createEntityManager();
+        try {
+            Person person = PersonDAO.findByEmail(email);
+            if (person != null) {
+                String resetPassword = UUID.randomUUID().toString();
+                char[] password = resetPassword.toCharArray();
+                person.setPasswordHash(PasswordUtil.hash(password, CHARSET));
+                
+                JpaUtil.beginTransaction();
+                PersonDAO.update(person);
+                JpaUtil.commitTransaction();
+                
+                EmailSender.sendResetPassword(person, resetPassword);
+                return true;
+            }
+        }catch(RollbackException e) 
+        {
+            JpaUtil.rollbackTransaction();
+        }
+        finally
+        {
+            JpaUtil.closeEntityManager();
+        }
+        return false;
+    }
+    
     public static boolean createAndAssignIntervention(Intervention intervention, Long clientId) 
     {
         try 
@@ -118,7 +146,7 @@ public final class Service {
             
             InterventionDAO.create(intervention);
             closest.setAvailable(false);
-            EmployeeDAO.update(closest);
+            PersonDAO.update(closest);
             JpaUtil.commitTransaction();
             NotificationSender.sendInterventionNeeded(intervention);
             return true;
@@ -187,7 +215,7 @@ public final class Service {
             JpaUtil.beginTransaction();
             InterventionDAO.update(intervention);
             intervention.getEmployee().setAvailable(true);
-            EmployeeDAO.update(intervention.getEmployee());
+            PersonDAO.update(intervention.getEmployee());
             JpaUtil.commitTransaction();
             NotificationSender.sendAttestationFilled(intervention);
         } catch (RollbackException ex) {

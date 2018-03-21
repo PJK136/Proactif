@@ -33,5 +33,13 @@ public final class EmailSender {
                     + "Merci de recommencer ultérieusement.");
     }
     
+    public static boolean sendResetPassword(Person person, String password) {
+        return send("contact@proact.if", person.getEmail(),
+                    "Votre nouveau mot de passe chez Proact'IF",
+                    "Bonjour " + person.getFirstName() + ",\n"
+                    + "Votre mot de passe a été réinitialisé à la valeur " + password
+                    + "\nVous pouvez dès à présent l'utiliser pour vous connecter.");
+    }
+    
     
 }
