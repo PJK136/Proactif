@@ -89,8 +89,8 @@ public class Main {
         logger.info(intervention.toString());
         
         
-        logger.info("{}", Service.getInterventionByClient(c1.getId()));
-        logger.info("{}", Service.getInterventionsToDoByEmployee(e1.getId()));
+        logger.info("{}", Service.getInterventionsByClient(c1.getId()));
+        logger.info("{}", Service.getInterventionToDoByEmployee(e1.getId()));
         
         EmailSender.send("me@google.com", "you@facebook.com", "Test", "Hello !\nHow are you ?");
         JpaUtil.destroy();

@@ -1,8 +1,10 @@
 package dao;
 
 import entities.Intervention;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -21,21 +23,28 @@ public class InterventionDAO {
         return JpaUtil.getEntityManager().find(Intervention.class, id);
     }
     
-    public static List<Intervention> findInterventionsByClient(long clientId) {
+    public static List<Intervention> findInterventionsByClient(Long clientId) {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.client.id = :id")
         .setParameter("id", clientId);
         return (List<Intervention>) query.getResultList();
     }
 
-    public static Intervention findInterventionToDoByEmployee(long employeeId) {
+    public static Intervention findInterventionToDoByEmployee(Long employeeId) {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.endDate = NULL AND i.employee.id = :id")
         .setParameter("id", employeeId);
-        return (Intervention) query.getSingleResult();
+        List<Intervention> interventions = (List<Intervention>) query.getResultList();
+        return interventions.isEmpty()?null:interventions.get(0);
     }
 
     public static List<Intervention> findFinishedInterventionsByEmployee(Long employeeId) {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.endDate != NULL AND i.employee.id = :employeeId")
                 .setParameter("employeeId", employeeId);
+        return (List<Intervention>) query.getResultList();
+    }
+    
+    public static List<Intervention> findInterventionsByDay(Date day) {
+        Query query = JpaUtil.getEntityManager().createQuery("SELECT i FROM Intervention i WHERE i.startDate = :day")
+                .setParameter("day", day, TemporalType.DATE);
         return (List<Intervention>) query.getResultList();
     }
 }

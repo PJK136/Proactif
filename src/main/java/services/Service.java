@@ -83,7 +83,7 @@ public final class Service {
         return null;
     }
     
-    public static boolean createAndAssignIntervention(Intervention intervention, long clientId) 
+    public static boolean createAndAssignIntervention(Intervention intervention, Long clientId) 
     {
         try 
         {
@@ -134,7 +134,7 @@ public final class Service {
         } 
     }
     
-    public static List<Intervention> getInterventionsByClient(long clientId) {
+    public static List<Intervention> getInterventionsByClient(Long clientId) {
         JpaUtil.createEntityManager();
         try {
             return InterventionDAO.findInterventionsByClient(clientId);
@@ -145,7 +145,7 @@ public final class Service {
         }
     }
 
-    public static Intervention getInterventionToDoByEmployee(long employeeId) {
+    public static Intervention getInterventionToDoByEmployee(Long employeeId) {
         JpaUtil.createEntityManager();
         try {
             return InterventionDAO.findInterventionToDoByEmployee(employeeId);
@@ -156,10 +156,21 @@ public final class Service {
         }
     }
     
-    public static List<Intervention> getFinishedInterventionsByEmployee(long employeeId) {
+    public static List<Intervention> getFinishedInterventionsByEmployee(Long employeeId) {
         JpaUtil.createEntityManager();
         try {
             return InterventionDAO.findFinishedInterventionsByEmployee(employeeId);
+        }
+        finally
+        {
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public static List<Intervention> getInterventionsByDay(Date day) {
+        JpaUtil.createEntityManager();
+        try {
+            return InterventionDAO.findInterventionsByDay(day);
         }
         finally
         {
