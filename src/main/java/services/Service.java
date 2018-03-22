@@ -216,8 +216,15 @@ public final class Service {
         }
         try {
             JpaUtil.createEntityManager();
+            try {
+                if(InterventionDAO.find(intervention.getId())==null || PersonDAO.findById(intervention.getEmployee().getId())==null) {
+                    return false;
+                }
+            } catch(IllegalArgumentException ex) {
+                return false;
+            }
             JpaUtil.beginTransaction();
-            InterventionDAO.update(intervention);
+            InterventionDAO.update(intervention); 
             intervention.getEmployee().setAvailable(true);
             PersonDAO.update(intervention.getEmployee());
             JpaUtil.commitTransaction();

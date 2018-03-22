@@ -7,76 +7,52 @@ import javax.persistence.Query;
 
 
 public class deleteDB {
-    public static void dropEmployeeTable() {
+    
+    private static void executeQueries(String... queries) {
         JpaUtil.createEntityManager();
         JpaUtil.beginTransaction();
-        Query query = JpaUtil.getEntityManager().createNativeQuery("DELETE FROM Employee");
-        query.executeUpdate();
+        for(String q: queries) {
+            JpaUtil.getEntityManager().createNativeQuery(q).executeUpdate();   
+        }
         JpaUtil.commitTransaction();
         JpaUtil.closeEntityManager();
+    }
+    
+    public static void dropEmployeeTable() {
+        executeQueries("DELETE FROM Employee");
     }
     
     public static void dropClientTable() {
-        JpaUtil.createEntityManager();
-        JpaUtil.beginTransaction();
-        Query query = JpaUtil.getEntityManager().createNativeQuery("DELETE FROM Client");
-        query.executeUpdate();
-        JpaUtil.commitTransaction();
-        JpaUtil.closeEntityManager();
+        executeQueries("DELETE FROM Client");
     }
     
     public static void dropPersonTable() {
-        JpaUtil.createEntityManager();
-        JpaUtil.beginTransaction();
-        Query query = JpaUtil.getEntityManager().createNativeQuery("DELETE FROM Person");
-        query.executeUpdate();
-        JpaUtil.commitTransaction();
-        JpaUtil.closeEntityManager();
+        dropEmployeeTable();
+        dropClientTable();
+        executeQueries("DELETE FROM Person");
     }
     
     public static void dropInterventionAnimalTable() {
-        JpaUtil.createEntityManager();
-        JpaUtil.beginTransaction();
-        Query query = JpaUtil.getEntityManager().createNativeQuery("DELETE FROM InterventionAnimal");
-        query.executeUpdate();
-        JpaUtil.commitTransaction();
-        JpaUtil.closeEntityManager();
+        executeQueries("DELETE FROM InterventionAnimal");
     }
     
     public static void dropInterventionIncidentTable() {
-        JpaUtil.createEntityManager();
-        JpaUtil.beginTransaction();
-        Query query = JpaUtil.getEntityManager().createNativeQuery("DELETE FROM InterventionIncident");
-        query.executeUpdate();
-        JpaUtil.commitTransaction();
-        JpaUtil.closeEntityManager();
+        executeQueries("DELETE FROM InterventionIncident");
     }
     
     public static void dropInterventionLivraisonTable() {
-        JpaUtil.createEntityManager();
-        JpaUtil.beginTransaction();
-        Query query = JpaUtil.getEntityManager().createNativeQuery("DELETE FROM InterventionLivraison");
-        query.executeUpdate();
-        JpaUtil.commitTransaction();
-        JpaUtil.closeEntityManager();
+        executeQueries("DELETE FROM InterventionLivraison");
     }
     
     public static void dropInterventionTable() {
-        JpaUtil.createEntityManager();
-        JpaUtil.beginTransaction();
-        Query query = JpaUtil.getEntityManager().createNativeQuery("DELETE FROM Intervention");
-        query.executeUpdate();
-        JpaUtil.commitTransaction();
-        JpaUtil.closeEntityManager();
-    }
-    
-    public static void dropAllTable() {
         dropInterventionAnimalTable();
         dropInterventionIncidentTable();
         dropInterventionLivraisonTable();
+        executeQueries("DELETE FROM Intervention");
+    }
+    
+    public static void dropAllTable() {
         dropInterventionTable();
-        dropClientTable();
-        dropEmployeeTable();
         dropPersonTable();
     }
 }
