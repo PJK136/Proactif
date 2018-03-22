@@ -36,7 +36,7 @@ public final class GeoService {
         try {
             GeocodingResult[] results = GeocodingApi.geocode(MON_CONTEXTE_GEOAPI, adresse).await();
 
-            return results[0].geometry.location;
+            return results.length != 0 ? results[0].geometry.location : null;
 
         } catch (Exception ex) {
             logger.error("{}", ex);
