@@ -1,6 +1,7 @@
 package services;
 
 import dao.JpaUtil;
+import dao.deleteDB;
 import entities.Address;
 import entities.Client;
 import entities.Employee;
@@ -234,7 +235,7 @@ public class ServiceNGTest {
     /**
      * Test of getInterventionsByClient method, of class Service.
      */
-    @org.testng.annotations.Test
+    @org.testng.annotations.Test(enabled=false)
     public void testGetInterventionsByClient() {
         final int REPEAT = 20;
         boolean expResult[] = {true, true, true};
@@ -269,7 +270,7 @@ public class ServiceNGTest {
     /**
      * Test of getInterventionToDoByEmployee method, of class Service.
      */
-    @org.testng.annotations.Test
+    @org.testng.annotations.Test(enabled=false)
     public void testGetInterventionToDoByEmployee() {
         final int REPEAT = 20;
         boolean expResult[] = {false, false, true};
@@ -306,13 +307,36 @@ public class ServiceNGTest {
      */
     @org.testng.annotations.Test
     public void testGetFinishedInterventionsByEmployee() {
-        System.out.println("getFinishedInterventionsByEmployee");
-        Long employeeId = null;
-        List expResult = null;
-        List result = Service.getFinishedInterventionsByEmployee(employeeId);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        final int REPEAT = 20;
+        boolean expResult[] = {true, true, true};
+        
+        logger.info("-----GET FINISHED INTERVENTIONS BY EMPLOYEE-----");
+        logger.info("Cas négatif 1 : l'employé n'existe pas dans la BDD.");
+        logger.info("Cas vide");
+        logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
+        logger.info("Résultat attendu : {}", Arrays.toString(expResult));
+        
+        for(int i = 0; i<REPEAT; i++) {
+            deleteDB.dropEmployeeTable();    
+            boolean result[] = new boolean[expResult.length];
+            result[0] = Service.getFinishedInterventionsByEmployee(new Long(0)).isEmpty();
+            Intervention notFound = new Intervention(UUID.randomUUID().toString(), new Date());
+            
+            Employee nfEmployee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
+            result[1] = Service.getFinishedInterventionsByEmployee(nfEmployee.getId()).isEmpty();
+            
+            Client nfClient = clients.pop();
+            nfClient.setAddress(addresses.pop());
+            assert(Service.register(nfClient, UUID.randomUUID().toString().toCharArray()));
+            assert(Service.createAndAssignIntervention(notFound, nfClient.getId()));  
+            notFound.setComment(UUID.randomUUID().toString());
+            assert(Service.fillAttestation(notFound));
+            result[2] = Service.getFinishedInterventionsByEmployee(nfEmployee.getId()).size()==1;          
+            
+            logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
+            assertEquals(result, expResult);
+        }
     }
 
     /**

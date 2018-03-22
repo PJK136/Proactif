@@ -210,7 +210,7 @@ public final class Service {
         }
     }
 
-    public static void fillAttestation(Intervention intervention) throws NonexistentEntityException {
+    public static boolean fillAttestation(Intervention intervention) {
         if(intervention.getEndDate() == null) {
             intervention.setEndDate(new Date());
         }
@@ -224,16 +224,10 @@ public final class Service {
             NotificationSender.sendAttestationFilled(intervention);
         } catch (RollbackException ex) {
             JpaUtil.rollbackTransaction();
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Long id = intervention.getId();
-                if (InterventionDAO.find(id) == null) {
-                    throw new NonexistentEntityException("The intervention with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
+            return false;
         } finally {
             JpaUtil.closeEntityManager();
         }
+        return true;
     }
 }

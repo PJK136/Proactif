@@ -16,4 +16,6 @@ public class EmployeeDAO {
         return (List<Employee>) query.getResultList();
     }
     
+    
+    
 }
