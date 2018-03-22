@@ -271,13 +271,34 @@ public class ServiceNGTest {
      */
     @org.testng.annotations.Test
     public void testGetInterventionToDoByEmployee() {
-        System.out.println("getInterventionToDoByEmployee");
-        Long employeeId = null;
-        Intervention expResult = null;
-        Intervention result = Service.getInterventionToDoByEmployee(employeeId);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        final int REPEAT = 20;
+        boolean expResult[] = {false, false, true};
+        
+        logger.info("-----GET INTERVENTIONS BY CLIENT-----");
+        logger.info("Cas négatif 1 : l'employé n'existe pas dans la BDD.");
+        logger.info("Cas vide");
+        logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
+        logger.info("Résultat attendu : {}", Arrays.toString(expResult));
+        
+        for(int i = 0; i<REPEAT; i++) {
+            
+            boolean result[] = new boolean[expResult.length];
+            result[0] = Service.getInterventionToDoByEmployee(new Long(0)) != null;
+            Intervention notFound = new Intervention(UUID.randomUUID().toString(), new Date());
+            
+            Employee nfEmployee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
+            result[1] = Service.getInterventionToDoByEmployee(nfEmployee.getId()) != null;
+            
+            Client nfClient = clients.pop();
+            nfClient.setAddress(addresses.pop());
+            assert(Service.register(nfClient, UUID.randomUUID().toString().toCharArray()));
+            assert(Service.createAndAssignIntervention(notFound, nfClient.getId()));  
+            result[2] = Service.getInterventionToDoByEmployee(nfEmployee.getId()) !=null;          
+            
+            logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
+            assertEquals(result, expResult);
+        }
     }
 
     /**
