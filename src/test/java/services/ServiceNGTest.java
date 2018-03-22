@@ -197,7 +197,7 @@ public class ServiceNGTest {
     /**
      * Test of createAndAssignIntervention method, of class Service.
      */
-    @org.testng.annotations.Test
+    @org.testng.annotations.Test(enabled=false)
     public void testCreateAndAssignIntervention() {
         final int REPEAT = 20;
         boolean expResult[] = {false, false, true};
@@ -236,13 +236,34 @@ public class ServiceNGTest {
      */
     @org.testng.annotations.Test
     public void testGetInterventionsByClient() {
-        System.out.println("getInterventionsByClient");
-        Long clientId = null;
-        List expResult = null;
-        List result = Service.getInterventionsByClient(clientId);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        final int REPEAT = 20;
+        boolean expResult[] = {true, true, true};
+        
+        logger.info("-----GET INTERVENTIONS BY CLIENT-----");
+        logger.info("Cas négatif 1 : le client n'existe pas dans la BDD.");
+        logger.info("Cas vide");
+        logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
+        logger.info("Résultat attendu : {}", Arrays.toString(expResult));
+        
+        for(int i = 0; i<REPEAT; i++) {
+            
+            boolean result[] = new boolean[expResult.length];
+            result[0] = Service.getInterventionsByClient(new Long(0)).isEmpty();
+            Intervention notFound = new Intervention(UUID.randomUUID().toString(), new Date());
+            
+            Client nfClient = clients.pop();
+            nfClient.setAddress(addresses.pop());
+            assert(Service.register(nfClient, UUID.randomUUID().toString().toCharArray()));
+            result[1] = Service.getInterventionsByClient(nfClient.getId()).isEmpty();
+            
+            Employee nfEmployee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
+            assert(Service.createAndAssignIntervention(notFound, nfClient.getId()));  
+            result[2] = Service.getInterventionsByClient(nfClient.getId()).size()==1;          
+            
+            logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
+            assertEquals(result, expResult);
+        }
     }
 
     /**
