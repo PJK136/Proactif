@@ -17,12 +17,11 @@ import org.slf4j.LoggerFactory;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 import services.util.CsvConvert;
-import services.util.NotificationSender;
 
 public class ServiceNGTest {
     
     final static String DATA_PATH = "src/main/resources/mockData/";
-    private final static Logger logger = LoggerFactory.getLogger(NotificationSender.class);
+    private final static Logger logger = LoggerFactory.getLogger(ServiceNGTest.class);
     private static Stack<Client> clients = new Stack<>();
     private static Stack<Employee> employees = new Stack<>();
     private static Stack<Address> addresses = new Stack<>();
