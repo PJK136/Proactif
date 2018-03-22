@@ -119,10 +119,14 @@ public final class Service {
             JpaUtil.beginTransaction();
 
             Client client = (Client) PersonDAO.findById(clientId);
+            if(client == null) { // le client n'existe pas
+                logger.warn("Le client (id = {}) n'existe pas pour l'intervention {}", clientId, intervention);
+                return false;
+            }
             
             List<Employee> availableEmployees = EmployeeDAO.getAllAvailable();
             if(availableEmployees.isEmpty())
-            {   //Aucun employé disponible
+            {   //pas d'employé disponible
                 logger.warn("Aucun employé n'est disponible pour {}", intervention);
                 return false;
             }

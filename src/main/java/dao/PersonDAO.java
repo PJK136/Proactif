@@ -34,7 +34,8 @@ public class PersonDAO {
     public static Person findByEmail(String email) {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT p FROM Person p WHERE p.email = :email")
                 .setParameter("email", email);
-        return (Person) query.getSingleResult();
+        List<Person> interventions = (List<Person>) query.getResultList();
+        return interventions.isEmpty()?null:interventions.get(0);
     }
     
     public static Person findById(Long id) {

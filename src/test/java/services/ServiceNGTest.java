@@ -5,7 +5,6 @@ import entities.Address;
 import entities.Client;
 import entities.Employee;
 import entities.Intervention;
-import entities.Person;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,6 +15,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static org.testng.Assert.*;
+import org.testng.annotations.Test;
 import services.util.CsvConvert;
 import services.util.NotificationSender;
 
@@ -68,14 +68,14 @@ public class ServiceNGTest {
     /**
      * Test of register method, of class Service.
      */
-    @org.testng.annotations.Test
+    @Test(enabled=false)
     public void testRegister() {
         final int REPEAT = 20;
         boolean expResult[] = {true, false, true, false};
         
         logger.info("-----REGISTER-----");
         logger.info("Cas négatif 1 : l'email est déjà utilisé.");
-        logger.info("Cas négatif 2 : la géolocalisation à partir de l'adresse échoue.");
+        logger.info("Cas négatif 2 : l'adresse n'est pas géolocalisable.");
         logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
         logger.info("Résultat attendu : {}", Arrays.toString(expResult));
         
@@ -83,8 +83,8 @@ public class ServiceNGTest {
             Client registerTwice = clients.pop();
             registerTwice.setAddress(addresses.pop());
 
-            Client default_case = clients.pop();
-            default_case.setAddress(addresses.pop());
+            Client defaultCase = clients.pop();
+            defaultCase.setAddress(addresses.pop());
 
             Client geolocFail = clients.pop();
             geolocFail.setAddress(invalid_addresses.pop());
@@ -92,7 +92,7 @@ public class ServiceNGTest {
             boolean result[] = {
                 Service.register(registerTwice, UUID.randomUUID().toString().toCharArray()),
                 Service.register(registerTwice, UUID.randomUUID().toString().toCharArray()),
-                Service.register(default_case, UUID.randomUUID().toString().toCharArray()),
+                Service.register(defaultCase, UUID.randomUUID().toString().toCharArray()),
                 Service.register(geolocFail, UUID.randomUUID().toString().toCharArray())
             };
             logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
@@ -103,16 +103,45 @@ public class ServiceNGTest {
     /**
      * Test of login method, of class Service.
      */
-    @org.testng.annotations.Test
+    @org.testng.annotations.Test(enabled=false)
     public void testLogin() {
-        System.out.println("login");
-        String email = "";
-        char[] password = null;
-        Person expResult = null;
-        Person result = Service.login(email, password);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        final int REPEAT = 20;
+        boolean expResult[] = {false, true, false, true};
+        
+        logger.info("-----LOGIN-----");
+        logger.info("Cas négatif 1 : l'email n'existe pas dans la BDD.");
+        logger.info("Cas négatif 2 : le mot de passe ne correspond pas.");
+        logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
+        logger.info("Résultat attendu : {}", Arrays.toString(expResult));
+        
+        for(int i = 0; i<REPEAT; i++) {
+            Client notRegistered = clients.pop();
+            notRegistered.setAddress(addresses.pop());
+            String nrPassword = UUID.randomUUID().toString();
+
+            Client invalidPassword = clients.pop();
+            invalidPassword.setAddress(addresses.pop());
+            String invPassword = UUID.randomUUID().toString();
+
+            Client defaultCase = clients.pop();
+            defaultCase.setAddress(addresses.pop());
+            String dcPassword = UUID.randomUUID().toString();
+
+            boolean result[] = new boolean[expResult.length];
+            result[0] = Service.login(notRegistered.getEmail(), nrPassword.toCharArray()) != null;
+
+            assert(Service.register(notRegistered, nrPassword.toCharArray()));
+            result[1] = Service.login(notRegistered.getEmail(), nrPassword.toCharArray()) != null;
+
+            assert(Service.register(invalidPassword, invPassword.substring(1).toCharArray()));
+            result[2] = Service.login(invalidPassword.getEmail(), invPassword.toCharArray()) != null;
+
+            assert(Service.register(defaultCase, dcPassword.toCharArray()));
+            result[3] = Service.login(defaultCase.getEmail(), dcPassword.toCharArray()) != null;
+            
+            logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
+            assertEquals(result, expResult);
+        }    
     }
 
     /**
@@ -120,13 +149,33 @@ public class ServiceNGTest {
      */
     @org.testng.annotations.Test
     public void testResetPassword() {
-        System.out.println("resetPassword");
-        String email = "";
-        boolean expResult = false;
-        boolean result = Service.resetPassword(email);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        final int REPEAT = 20;
+        boolean expResult[] = {false, true, true};
+        
+        logger.info("-----RESET PASSWORD-----");
+        logger.info("Cas négatif 1 : l'email n'existe pas dans la BDD.");
+        logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
+        logger.info("Résultat attendu : {}", Arrays.toString(expResult));
+        
+        for(int i = 0; i<REPEAT; i++) {
+            Client notRegistered = clients.pop();
+            notRegistered.setAddress(addresses.pop());
+
+            Client defaultCase = clients.pop();
+            defaultCase.setAddress(addresses.pop());
+
+            boolean result[] = new boolean[expResult.length];
+            result[0] = Service.resetPassword(notRegistered.getEmail());
+
+            assert(Service.register(notRegistered, UUID.randomUUID().toString().toCharArray()));
+            result[1] = Service.resetPassword(notRegistered.getEmail());
+
+            assert(Service.register(defaultCase, UUID.randomUUID().toString().toCharArray()));
+            result[2] = Service.resetPassword(defaultCase.getEmail());
+            
+            logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
+            assertEquals(result, expResult);
+        }  
     }
 
     /**
