@@ -6,6 +6,8 @@ import entities.Client;
 import entities.Employee;
 import entities.Intervention;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -28,6 +30,10 @@ public class ServiceNGTest {
     private static Stack<Address> invalid_addresses = new Stack<>();
     private static int clientsSize;
     private static int employeesSize;
+    
+    private static Date workStart;
+    private static Date workEnd;
+    
     public ServiceNGTest() {
 
     }
@@ -49,6 +55,17 @@ public class ServiceNGTest {
         clientsSize = clients.size();
         employeesSize = employees.size();
         assertEquals(clientsSize, addresses.size(), invalid_addresses.size());
+        
+        SimpleDateFormat hours = new SimpleDateFormat("HH:mm:ss");
+        workStart = null;
+        workEnd = null;
+        try {
+            workStart = hours.parse("00:00:00");
+            workEnd = hours.parse("23:59:59");
+        } catch (ParseException ex) {
+            logger.error("", ex);
+        }
+        assert(workStart!=null && workEnd!=null);
     }
 
     @org.testng.annotations.AfterClass
@@ -146,7 +163,7 @@ public class ServiceNGTest {
     /**
      * Test of resetPassword method, of class Service.
      */
-    @org.testng.annotations.Test
+    @org.testng.annotations.Test(enabled=false)
     public void testResetPassword() {
         final int REPEAT = 20;
         boolean expResult[] = {false, true, true};
@@ -182,14 +199,40 @@ public class ServiceNGTest {
      */
     @org.testng.annotations.Test
     public void testCreateAndAssignIntervention() {
-        System.out.println("createAndAssignIntervention");
-        Intervention intervention = null;
-        Long clientId = null;
-        boolean expResult = false;
-        boolean result = Service.createAndAssignIntervention(intervention, clientId);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        final int REPEAT = 20;
+        boolean expResult[] = {false, false, true};
+        
+        logger.info("-----CREATE AND ASSIGN INTERVENTION-----");
+        logger.info("Cas négatif 1 : le client n'existe pas dans la BDD.");
+        logger.info("Cas négatif 2 : pas d'employé disponible.");
+        logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
+        logger.info("Résultat attendu : {}", Arrays.toString(expResult));
+        
+        for(int i = 0; i<REPEAT; i++) {
+            
+            boolean result[] = new boolean[expResult.length];
+            
+            Intervention notFound = new Intervention(UUID.randomUUID().toString(), new Date());
+            
+            Client nfClient = clients.pop();
+            nfClient.setAddress(addresses.pop());
+            
+            result[0] = Service.createAndAssignIntervention(notFound, new Long(0));
+            
+            assert(Service.register(nfClient, UUID.randomUUID().toString().toCharArray()));
+            result[1] = Service.createAndAssignIntervention(notFound, nfClient.getId());
+            
+            Employee nfEmployee = new Employee();
+            nfEmployee.setAvailable(true);
+            nfEmployee.setWorkStart(workStart);
+            nfEmployee.setWorkEnd(workEnd);
+            nfEmployee.setAddress(addresses.pop()); 
+            assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
+            result[2] = Service.createAndAssignIntervention(notFound, nfClient.getId());            
+            
+            logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
+            assertEquals(result, expResult);
+        }  
     }
 
     /**
