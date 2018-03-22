@@ -222,11 +222,7 @@ public class ServiceNGTest {
             assert(Service.register(nfClient, UUID.randomUUID().toString().toCharArray()));
             result[1] = Service.createAndAssignIntervention(notFound, nfClient.getId());
             
-            Employee nfEmployee = new Employee();
-            nfEmployee.setAvailable(true);
-            nfEmployee.setWorkStart(workStart);
-            nfEmployee.setWorkEnd(workEnd);
-            nfEmployee.setAddress(addresses.pop()); 
+            Employee nfEmployee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
             assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
             result[2] = Service.createAndAssignIntervention(notFound, nfClient.getId());            
             
