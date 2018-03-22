@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Stack;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -80,6 +80,7 @@ public class ServiceNGTest {
 
     @org.testng.annotations.AfterMethod
     public void tearDownMethod() throws Exception {
+        deleteDB.dropAllTable();
     }
 
     /**
@@ -305,7 +306,7 @@ public class ServiceNGTest {
     /**
      * Test of getFinishedInterventionsByEmployee method, of class Service.
      */
-    @org.testng.annotations.Test
+    @org.testng.annotations.Test(enabled = false)
     public void testGetFinishedInterventionsByEmployee() {
         final int REPEAT = 20;
         boolean expResult[] = {true, true, true};
@@ -344,13 +345,35 @@ public class ServiceNGTest {
      */
     @org.testng.annotations.Test
     public void testGetInterventionsByDay() {
-        System.out.println("getInterventionsByDay");
-        Date day = null;
-        List expResult = null;
-        List result = Service.getInterventionsByDay(day);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        final int REPEAT = 20;
+        boolean expResult[] = {false, false, true};
+        
+        logger.info("-----GET INTERVENTIONS BY DAY-----");
+        logger.info("Cas vide");
+        logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
+        logger.info("Résultat attendu : {}", Arrays.toString(expResult));
+        
+        for(int i = 0; i<REPEAT; i++) {   
+            boolean result[] = new boolean[expResult.length];
+            result[0] = !Service.getInterventionsByDay(new Date()).isEmpty();
+
+            Employee employee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            Client client = clients.pop();
+            client.setAddress(addresses.pop());
+            assert(Service.register(employee, UUID.randomUUID().toString().toCharArray()));
+            assert(Service.register(client, UUID.randomUUID().toString().toCharArray()));
+            
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.roll(Calendar.DATE, -1);
+            Intervention wrongDay = new Intervention(UUID.randomUUID().toString(), yesterday.getTime());
+            assert(Service.createAndAssignIntervention(wrongDay, client.getId()));  
+            
+            result[1] = !Service.getInterventionsByDay(new Date()).isEmpty();
+            result[2] = Service.getInterventionsByDay(yesterday.getTime()).size() == i+1;
+            
+            logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
+            assertEquals(result, expResult);
+        }
     }
 
     /**
