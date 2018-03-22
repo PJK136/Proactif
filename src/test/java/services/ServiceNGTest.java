@@ -121,7 +121,7 @@ public class ServiceNGTest {
     /**
      * Test of login method, of class Service.
      */
-    @org.testng.annotations.Test(enabled=false)
+    @Test(enabled=false)
     public void testLogin() {
         final int REPEAT = 20;
         boolean expResult[] = {false, true, false, true};
@@ -165,7 +165,7 @@ public class ServiceNGTest {
     /**
      * Test of resetPassword method, of class Service.
      */
-    @org.testng.annotations.Test(enabled=false)
+    @Test(enabled=false)
     public void testResetPassword() {
         final int REPEAT = 20;
         boolean expResult[] = {false, true, true};
@@ -199,7 +199,7 @@ public class ServiceNGTest {
     /**
      * Test of createAndAssignIntervention method, of class Service.
      */
-    @org.testng.annotations.Test(enabled=false)
+    @Test(enabled=false)
     public void testCreateAndAssignIntervention() {
         final int REPEAT = 20;
         boolean expResult[] = {false, false, true};
@@ -229,14 +229,14 @@ public class ServiceNGTest {
             result[2] = Service.createAndAssignIntervention(notFound, nfClient.getId());            
             
             logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
-            assertEquals(result, expResult);
+        assertEquals(result, expResult);
         }  
     }
 
     /**
      * Test of getInterventionsByClient method, of class Service.
      */
-    @org.testng.annotations.Test(enabled=false)
+    @Test(enabled=false)
     public void testGetInterventionsByClient() {
         final int REPEAT = 20;
         boolean expResult[] = {true, true, true};
@@ -264,14 +264,14 @@ public class ServiceNGTest {
             result[2] = Service.getInterventionsByClient(nfClient.getId()).size()==1;          
             
             logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
-            assertEquals(result, expResult);
+        assertEquals(result, expResult);
         }
     }
 
     /**
      * Test of getInterventionToDoByEmployee method, of class Service.
      */
-    @org.testng.annotations.Test(enabled=false)
+    @Test(enabled=false)
     public void testGetInterventionToDoByEmployee() {
         final int REPEAT = 20;
         boolean expResult[] = {false, false, true};
@@ -299,14 +299,14 @@ public class ServiceNGTest {
             result[2] = Service.getInterventionToDoByEmployee(nfEmployee.getId()) !=null;          
             
             logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
-            assertEquals(result, expResult);
+        assertEquals(result, expResult);
         }
     }
 
     /**
      * Test of getFinishedInterventionsByEmployee method, of class Service.
      */
-    @org.testng.annotations.Test(enabled = false)
+    @Test(enabled=false)
     public void testGetFinishedInterventionsByEmployee() {
         final int REPEAT = 20;
         boolean expResult[] = {true, true, true};
@@ -336,14 +336,14 @@ public class ServiceNGTest {
             result[2] = Service.getFinishedInterventionsByEmployee(nfEmployee.getId()).size()==1;          
             
             logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
-            assertEquals(result, expResult);
+        assertEquals(result, expResult);
         }
     }
 
     /**
      * Test of getInterventionsByDay method, of class Service.
      */
-    @org.testng.annotations.Test(enabled = false)
+    @Test(enabled=false)
     public void testGetInterventionsByDay() {
         final int REPEAT = 20;
         boolean expResult[] = {false, false, true};
@@ -372,14 +372,14 @@ public class ServiceNGTest {
             result[2] = Service.getInterventionsByDay(yesterday.getTime()).size() == i+1;
             
             logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
-            assertEquals(result, expResult);
+        assertEquals(result, expResult);
         }
     }
 
     /**
      * Test of fillAttestation method, of class Service.
      */
-    @org.testng.annotations.Test
+    @Test
     public void testFillAttestation() {
         final int REPEAT = 20;
         boolean expResult[] = {false, false, true};
