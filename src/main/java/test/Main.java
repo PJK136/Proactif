@@ -8,7 +8,6 @@ import entities.Intervention;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.Service;
@@ -54,7 +53,7 @@ public class Main {
         } catch (ParseException ex) {
             logger.error("", ex);
         }
-        Employee e1 = new Employee(true, workStart, workEnd, "Mr.", "Tristan2", "Cadet", d1, "02 99 XX XX XX", "monmail@xxx.xx", addr2); 
+        Employee e1 = new Employee("Mr.", "Tristan2", "Cadet", d1, "02 99 XX XX XX", "monmail@xxx.xx", addr2, workStart, workEnd); 
         
         Service.register(e1, new char[]{'m', 'o', 'n', 'm', 'd', 'p'});
         

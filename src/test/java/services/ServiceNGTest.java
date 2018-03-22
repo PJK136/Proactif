@@ -224,7 +224,7 @@ public class ServiceNGTest {
             assert(Service.register(nfClient, UUID.randomUUID().toString().toCharArray()));
             result[1] = Service.createAndAssignIntervention(notFound, nfClient.getId());
             
-            Employee nfEmployee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            Employee nfEmployee = new Employee(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop(), workStart, workEnd);
             assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
             result[2] = Service.createAndAssignIntervention(notFound, nfClient.getId());            
             
@@ -258,7 +258,7 @@ public class ServiceNGTest {
             assert(Service.register(nfClient, UUID.randomUUID().toString().toCharArray()));
             result[1] = Service.getInterventionsByClient(nfClient.getId()).isEmpty();
             
-            Employee nfEmployee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            Employee nfEmployee = new Employee(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop(), workStart, workEnd);
             assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
             assert(Service.createAndAssignIntervention(notFound, nfClient.getId()));  
             result[2] = Service.getInterventionsByClient(nfClient.getId()).size()==1;          
@@ -288,7 +288,7 @@ public class ServiceNGTest {
             result[0] = Service.getInterventionToDoByEmployee(new Long(0)) != null;
             Intervention notFound = new Intervention(UUID.randomUUID().toString(), new Date());
             
-            Employee nfEmployee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            Employee nfEmployee = new Employee(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop(), workStart, workEnd);
             assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
             result[1] = Service.getInterventionToDoByEmployee(nfEmployee.getId()) != null;
             
@@ -323,7 +323,7 @@ public class ServiceNGTest {
             result[0] = Service.getFinishedInterventionsByEmployee(new Long(0)).isEmpty();
             Intervention notFound = new Intervention(UUID.randomUUID().toString(), new Date());
             
-            Employee nfEmployee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            Employee nfEmployee = new Employee(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop(), workStart, workEnd);
             assert(Service.register(nfEmployee, UUID.randomUUID().toString().toCharArray()));
             result[1] = Service.getFinishedInterventionsByEmployee(nfEmployee.getId()).isEmpty();
             
@@ -357,7 +357,7 @@ public class ServiceNGTest {
             boolean result[] = new boolean[expResult.length];
             result[0] = !Service.getInterventionsByDay(new Date()).isEmpty();
 
-            Employee employee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            Employee employee = new Employee(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop(), workStart, workEnd);
             Client client = clients.pop();
             client.setAddress(addresses.pop());
             assert(Service.register(employee, UUID.randomUUID().toString().toCharArray()));
@@ -395,7 +395,7 @@ public class ServiceNGTest {
             
             Client client = clients.pop();
             client.setAddress(addresses.pop());
-            Employee employee = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            Employee employee = new Employee(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop(), workStart, workEnd);
             assert(Service.register(client, UUID.randomUUID().toString().toCharArray()));
             assert(Service.register(employee, UUID.randomUUID().toString().toCharArray()));
             
@@ -408,7 +408,7 @@ public class ServiceNGTest {
 
             
             assert(Service.createAndAssignIntervention(notFound, client.getId()));
-            Employee employee2 = new Employee(true, workStart, workEnd, UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop());
+            Employee employee2 = new Employee(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), addresses.pop(), workStart, workEnd);
             notFound.setEmployee(employee2);
             result[1] = Service.fillAttestation(notFound);  
             

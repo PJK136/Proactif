@@ -21,9 +21,9 @@ public class Employee extends Person {
 
     public Employee(){}
     
-    public Employee(boolean available, Date workStart, Date workEnd, String honorific, String firstName, String lastName, Date birthdate, String phoneNumber, String email, Address address) {
+    public Employee(String honorific, String firstName, String lastName, Date birthdate, String phoneNumber, String email, Address address, Date workStart, Date workEnd) {
         super(honorific, firstName, lastName, birthdate, phoneNumber, email, address);
-        this.available = available;
+        this.available = true;
         this.workStart = workStart;
         this.workEnd = workEnd;
     }

@@ -59,16 +59,15 @@ public final class CsvConvert {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (CSVRecord record : records) {
             Employee employee = new Employee(
-                Boolean.parseBoolean(record.get("available")),
-                hourFormat.parse(record.get("workStart"), new ParsePosition(0)),
-                hourFormat.parse(record.get("workEnd"), new ParsePosition(0)),
                 record.get("honorific"),
                 record.get("firstName"),
                 record.get("lastName"),
                 dateFormat.parse(record.get("birthdate"), new ParsePosition(0)),
                 record.get("phoneNumber"),
                 record.get("email"),
-                null
+                null,
+                hourFormat.parse(record.get("workStart"), new ParsePosition(0)),
+                hourFormat.parse(record.get("workEnd"), new ParsePosition(0))
             );
             employees.add(employee);                    
         }
