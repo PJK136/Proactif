@@ -1,13 +1,17 @@
 package services;
 
 import dao.JpaUtil;
+import entities.Address;
 import entities.Client;
+import entities.Employee;
 import entities.Intervention;
 import entities.Person;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +21,35 @@ import services.util.NotificationSender;
 
 public class ServiceNGTest {
     
-    final static String DATA_PATH = "src/main/resources/testData/";
+    final static String DATA_PATH = "src/main/resources/mockData/";
     private final static Logger logger = LoggerFactory.getLogger(NotificationSender.class);
-    
+    private static Stack<Client> clients = new Stack<>();
+    private static Stack<Employee> employees = new Stack<>();
+    private static Stack<Address> addresses = new Stack<>();
+    private static Stack<Address> invalid_addresses = new Stack<>();
+    private static int clientsSize;
+    private static int employeesSize;
     public ServiceNGTest() {
+
     }
 
     @org.testng.annotations.BeforeClass
     public static void setUpClass() throws Exception {
-        JpaUtil.init();        
+        JpaUtil.init();  
+        
+        clients.addAll(CsvConvert.loadClients(Paths.get(DATA_PATH + "clients.csv")));
+        addresses.addAll(CsvConvert.loadAddresses(Paths.get(DATA_PATH + "addresses.csv")));
+        invalid_addresses.addAll(CsvConvert.loadAddresses(Paths.get(DATA_PATH + "invalid_addresses.csv")));
+        employees.addAll(CsvConvert.loadEmployeesWithAddresses(Paths.get(DATA_PATH + "employees.csv"), Paths.get(DATA_PATH + "employees_addresses.csv")));
+        
+        Collections.shuffle(clients);
+        Collections.shuffle(addresses);
+        Collections.shuffle(invalid_addresses);
+        Collections.shuffle(employees);
+        
+        clientsSize = clients.size();
+        employeesSize = employees.size();
+        assertEquals(clientsSize, addresses.size(), invalid_addresses.size());
     }
 
     @org.testng.annotations.AfterClass
@@ -46,22 +70,34 @@ public class ServiceNGTest {
      */
     @org.testng.annotations.Test
     public void testRegister() {
-        
-        List<Client> clients = CsvConvert.loadClientsWithAddresses(Paths.get(DATA_PATH + "register/clients.csv"), Paths.get(DATA_PATH + "register/adresses.csv"));
-        boolean expResult[] = {true, false, true};
-        boolean result[] = new boolean[clients.size()];
+        final int REPEAT = 20;
+        boolean expResult[] = {true, false, true, false};
         
         logger.info("-----REGISTER-----");
-        logger.info("Cas négatif : l'email est déjà utilisé.");
-        logger.info("Jeu de données : {}", Arrays.toString(clients.toArray()));
+        logger.info("Cas négatif 1 : l'email est déjà utilisé.");
+        logger.info("Cas négatif 2 : la géolocalisation à partir de l'adresse échoue.");
+        logger.info("Test effectué {} fois avec des clients et adresses tirées au hasard dans un jeu de taille {}.", REPEAT, clientsSize);
         logger.info("Résultat attendu : {}", Arrays.toString(expResult));
         
-        for(int i = 0; i<clients.size(); i++) {
-            result[i] = Service.register(clients.get(i), UUID.randomUUID().toString().toCharArray());
-        } 
-        
-        logger.info("Résultat obtenu : {}", Arrays.toString(result));
-        assertEquals(result, expResult);
+        for(int i = 0; i<REPEAT; i++) {
+            Client registerTwice = clients.pop();
+            registerTwice.setAddress(addresses.pop());
+
+            Client default_case = clients.pop();
+            default_case.setAddress(addresses.pop());
+
+            Client geolocFail = clients.pop();
+            geolocFail.setAddress(invalid_addresses.pop());
+            
+            boolean result[] = {
+                Service.register(registerTwice, UUID.randomUUID().toString().toCharArray()),
+                Service.register(registerTwice, UUID.randomUUID().toString().toCharArray()),
+                Service.register(default_case, UUID.randomUUID().toString().toCharArray()),
+                Service.register(geolocFail, UUID.randomUUID().toString().toCharArray())
+            };
+            logger.info("Résultat obtenu à N={} : {}", i, Arrays.toString(result));
+            assertEquals(result, expResult);
+        }    
     }
 
     /**
