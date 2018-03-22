@@ -174,7 +174,7 @@ public class Intervention implements Serializable {
 
     @Override
     public String toString() {
-        return "Intervention{" + "id=" + id + ", version=" + version + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", comment=" + comment + ", success=" + success + ", client=" + client.getId() + ", employee=" + employee.getId() + '}';
+        return "Intervention{" + "id=" + id + ", version=" + version + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", comment=" + comment + ", success=" + success + ", client=" + client.getId() + ", employee=" + (employee != null ? employee.getId() : "null") + '}';
     }
 
 }
