@@ -40,16 +40,8 @@ public class Employee extends Person {
         return workStart;
     }
 
-    public void setWorkStart(Date workStart) {
-        this.workStart = workStart;
-    }
-
     public Date getWorkEnd() {
         return workEnd;
-    }
-
-    public void setWorkEnd(Date workEnd) {
-        this.workEnd = workEnd;
     }
 
     @Override

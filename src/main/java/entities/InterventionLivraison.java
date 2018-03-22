@@ -31,16 +31,8 @@ public class InterventionLivraison extends Intervention {
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public String getCompany() {
         return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
     }
 
     @Override

@@ -29,10 +29,6 @@ public class InterventionAnimal extends Intervention {
         return animal;
     }
 
-    public void setAnimal(String animal) {
-        this.animal = animal;
-    }
-
     @Override
     public int hashCode() {
         int hash = super.hashCode();

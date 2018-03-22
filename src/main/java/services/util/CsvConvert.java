@@ -156,7 +156,6 @@ public final class CsvConvert {
             logger.info(employee.toString());
         }
         
-        
         logger.info("------END------");
     }
 }

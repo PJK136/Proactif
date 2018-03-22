@@ -65,18 +65,10 @@ public class Intervention implements Serializable {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Date getStartDate() {
         return startDate;
     }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
+    
     public Date getEndDate() {
         return endDate;
     }
