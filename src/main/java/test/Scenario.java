@@ -12,14 +12,13 @@ import entities.Person;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import services.Service;
 import services.util.ConsoleIO;
 import services.util.CsvConvert;
 
 /**
- *
- * @author paul
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 public class Scenario {
    

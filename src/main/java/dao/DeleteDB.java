@@ -1,10 +1,10 @@
-/*
- 
- */
 package dao;
 
+/**
+ * @author Tristan Cadet
+ * @author Paul Du
+ */
 public class DeleteDB {
-    
     private static void executeQueries(String... queries) {
         JpaUtil.createEntityManager();
         JpaUtil.beginTransaction();

@@ -5,8 +5,8 @@ import java.util.Objects;
 import javax.persistence.Entity;
 
 /**
- *
- * @author Azergante
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 @Entity
 public class InterventionLivraison extends Intervention {

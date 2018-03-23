@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
  * configuration indiquée dans le fichier persistence.xml du projet.
  *
  * @author DASI Team
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 public class JpaUtil {
     private final static Logger logger = LoggerFactory.getLogger(JpaUtil.class);

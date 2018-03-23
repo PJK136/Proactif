@@ -9,8 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
- * @author paul
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 public final class ConsoleIO {
     private static final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * @author paul
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 public class NotificationSender {
     private final static Logger logger = LoggerFactory.getLogger(NotificationSender.class);

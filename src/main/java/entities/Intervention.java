@@ -16,8 +16,8 @@ import static javax.persistence.TemporalType.DATE;
 import javax.persistence.Version;
 
 /**
- *
- * @author tcadet
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 @Entity
 @Inheritance (strategy = InheritanceType.JOINED)

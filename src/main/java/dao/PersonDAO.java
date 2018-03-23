@@ -5,8 +5,8 @@ import java.util.List;
 import javax.persistence.Query;
 
 /**
- *
- * @author tcadet
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 public class PersonDAO {
     public static void create(Person p) {

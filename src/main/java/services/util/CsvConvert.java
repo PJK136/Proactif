@@ -17,7 +17,10 @@ import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * @author Tristan Cadet
+ * @author Paul Du
+ */
 public final class CsvConvert {
     private final static Logger logger = LoggerFactory.getLogger(CsvConvert.class);
     

@@ -6,8 +6,8 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 
 /**
- *
- * @author tcadet
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 @Embeddable
 public class Address implements Serializable {

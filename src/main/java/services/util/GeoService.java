@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author DASI Team
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 /* DÉPENDANCES Maven:
 <dependency>

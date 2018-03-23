@@ -7,8 +7,8 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Azergante
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 public class InterventionDAO {
     public static void create(Intervention intervention) {

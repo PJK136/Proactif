@@ -4,8 +4,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 /**
- *
- * @author Azergante
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 @Entity
 public class InterventionIncident extends Intervention {

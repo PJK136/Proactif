@@ -14,8 +14,8 @@ import services.Service;
 import services.util.EmailSender;
 
 /**
- *
- * @author tcadet
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 public class Main {
     private final static Logger logger = LoggerFactory.getLogger(Main.class);

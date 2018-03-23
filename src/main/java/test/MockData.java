@@ -11,6 +11,10 @@ import org.slf4j.LoggerFactory;
 import services.Service;
 import services.util.CsvConvert;
 
+/**
+ * @author Tristan Cadet
+ * @author Paul Du
+ */
 public final class MockData {
     private final static Logger logger = LoggerFactory.getLogger(MockData.class);
     

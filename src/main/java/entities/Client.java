@@ -4,8 +4,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 /**
- *
- * @author tcadet
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 @Entity
 public class Client extends Person {

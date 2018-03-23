@@ -22,8 +22,8 @@ import services.util.NotificationSender;
 import services.util.PasswordUtil;
 
 /**
- *
- * @author tcadet
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 public final class Service {
     private final static Logger logger = LoggerFactory.getLogger(Service.class);

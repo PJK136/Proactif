@@ -7,8 +7,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Azergante
+ * @author Tristan Cadet
+ * @author Paul Du
  */
 @Entity
 public class Employee extends Person {
