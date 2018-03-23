@@ -2,19 +2,19 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="fr.insalyon.dasi_proactifJava_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entities.Address</class>
-    <class>entities.Person</class>
-    <class>entities.Client</class>
-    <class>entities.Employee</class>
-    <class>entities.Intervention</class>
-    <class>entities.InterventionIncident</class>
-    <class>entities.InterventionAnimal</class>
-    <class>entities.InterventionLivraison</class>
+    <class>fr.insalyon.dasi.entities.Employee</class>
+    <class>fr.insalyon.dasi.entities.Client</class>
+    <class>fr.insalyon.dasi.entities.InterventionAnimal</class>
+    <class>fr.insalyon.dasi.entities.Person</class>
+    <class>fr.insalyon.dasi.entities.Address</class>
+    <class>fr.insalyon.dasi.entities.InterventionIncident</class>
+    <class>fr.insalyon.dasi.entities.Intervention</class>
+    <class>fr.insalyon.dasi.entities.InterventionLivraison</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/proactif2"/>
-      <property name="javax.persistence.jdbc.user" value="tcadet"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/proactif"/>
+      <property name="javax.persistence.jdbc.user" value="proactif"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-      <property name="javax.persistence.jdbc.password" value="tcadet"/>
+      <property name="javax.persistence.jdbc.password" value="proactif"/>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
