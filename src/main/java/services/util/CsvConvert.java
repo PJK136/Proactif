@@ -127,31 +127,31 @@ public final class CsvConvert {
         final String dataPath = "src/main/resources/mockData/";
        
         /*logger.info("------EMPLOYEE ADRESSES------");
-        for(Address address: loadAddresses(Paths.get(dataPath + "employee_address.csv"))) {
+        for(Address address: loadAddresses(Paths.get(dataPath + "employees_addresses.csv"))) {
             logger.info(address.toString());
         }
         logger.info("------CLIENT ADRESSES------");
-        for(Address address: loadAddresses(Paths.get(dataPath + "client_address.csv"))) {
+        for(Address address: loadAddresses(Paths.get(dataPath + "clients_addresses.csv"))) {
             logger.info(address.toString());
         }
         
         logger.info("------CLIENTS------");
-        for(Client client: loadClients(Paths.get(dataPath + "client.csv"))) {
+        for(Client client: loadClients(Paths.get(dataPath + "clients.csv"))) {
             logger.info(client.toString());
         }
         
         logger.info("------EMPLOYEES------");
-        for(Employee employee: loadEmployees(Paths.get(dataPath + "employee.csv"))) {
+        for(Employee employee: loadEmployees(Paths.get(dataPath + "employees.csv"))) {
             logger.info(employee.toString());
         }
         
         logger.info("------CLIENTS WITH ADDRESSES------");
-        for(Client client: loadClientsWithAddresses(Paths.get(dataPath + "client.csv"), Paths.get(dataPath + "client_address.csv"))) {
+        for(Client client: loadClientsWithAddresses(Paths.get(dataPath + "clients.csv"), Paths.get(dataPath + "clients_addresses.csv"))) {
             logger.info(client.toString());
         }*/
         
         logger.info("------EMPLOYEES WITH ADDRESSES------");
-        for(Employee employee: loadEmployeesWithAddresses(Paths.get(dataPath + "employee.csv"), Paths.get(dataPath + "employee_address.csv"))) {
+        for(Employee employee: loadEmployeesWithAddresses(Paths.get(dataPath + "employees.csv"), Paths.get(dataPath + "employees_addresses.csv"))) {
             logger.info(employee.toString());
         }
         

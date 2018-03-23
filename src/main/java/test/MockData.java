@@ -21,11 +21,11 @@ public final class MockData {
     }
       
     public static boolean insertEmployees() {
-        return insertPersons(CsvConvert.loadEmployeesWithAddresses(Paths.get(DATA_PATH + "employee.csv"), Paths.get(DATA_PATH + "employee_address.csv")));
+        return insertPersons(CsvConvert.loadEmployeesWithAddresses(Paths.get(DATA_PATH + "employees.csv"), Paths.get(DATA_PATH + "employees_addresses.csv")));
     } 
    
     public static boolean insertClients() {
-        return insertPersons(CsvConvert.loadClientsWithAddresses(Paths.get(DATA_PATH + "client.csv"), Paths.get(DATA_PATH + "client_address.csv")));
+        return insertPersons(CsvConvert.loadClientsWithAddresses(Paths.get(DATA_PATH + "clients.csv"), Paths.get(DATA_PATH + "clients_addresses.csv")));
     }
      
     public static boolean insertPersons(List<? extends Person> persons) {
