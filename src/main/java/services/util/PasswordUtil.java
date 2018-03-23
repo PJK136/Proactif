@@ -4,7 +4,6 @@ package services.util;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import java.nio.charset.Charset;
 
 /**
@@ -30,7 +29,7 @@ public final class PasswordUtil {
      * @param charset  Charset of the password
      * @return the hash in format "$argon2i$v=19$m=128000,t=3,p=4$sfSe5MewORVlg8cDtxOTbg$uqWx4mZvLI092oJ8ZwAjAWU0rrBSDQkOezxAuvrE5dM"
      */
-    public static String hash(@NonNull char[] password, @NonNull Charset charset) {
+    public static String hash(char[] password, Charset charset) {
         String hash;
         Argon2 argon2Hasher = null;
         try {
@@ -60,7 +59,7 @@ public final class PasswordUtil {
      * @param charset  Charset of the password
      * @return True if the password matches the hash, false otherwise.
      */
-    public static boolean verify(@NonNull String hash, @NonNull char[] password, @NonNull Charset charset) {
+    public static boolean verify(String hash, char[] password, Charset charset) {
         Argon2 argon2Hasher = null;
         boolean isMatching;
         try {
