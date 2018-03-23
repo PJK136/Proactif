@@ -144,7 +144,7 @@ public class Scenario {
     }
 
     private static class AccueilClient extends Action {
-        private Client client;
+        private final Client client;
         
         public AccueilClient(Client client) {
             this.client = client;
@@ -294,7 +294,7 @@ public class Scenario {
     }
     
     private static class InterventionEnCours extends Action {
-        private Employee employee;
+        private final Employee employee;
         
         public InterventionEnCours(Employee employee) {
             this.employee = employee;
