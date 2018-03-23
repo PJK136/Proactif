@@ -46,7 +46,7 @@ public class Scenario {
     private static class Accueil extends Action {
         @Override
         public Action run() {
-            return showMenu("Proact'IF", new Action[] {new Inscription(), new Connexion(), new GodMode(), new Quitter()});
+            return showMenu("Proact'IF", new Action[] {new Inscription(), new Connexion(), new MotDePassePerdu(), new GodMode(), new Quitter()});
         }
     }
     
@@ -142,6 +142,28 @@ public class Scenario {
             }
         }
     }
+    
+    private static class MotDePassePerdu extends Action {
+        @Override
+        public String getName() {
+            return "Mot de passe perdu";
+        }
+        
+        @Override
+        public Action run() {
+            ConsoleIO.printMessageBox(getName());
+            ConsoleIO.println();
+            
+            if (Service.resetPassword(ConsoleIO.ask("Email :"))) {
+                ConsoleIO.println("Votre mot de passe a été réinitialisé !");
+            } else {
+                ConsoleIO.println("Cet email n'a pas été trouvé.");
+            }
+            
+            return new Accueil();
+        }
+    }
+
 
     private static class AccueilClient extends Action {
         private final Client client;
