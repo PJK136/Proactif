@@ -5,7 +5,6 @@ import dao.EmployeeDAO;
 import dao.InterventionDAO;
 import dao.JpaUtil;
 import dao.PersonDAO;
-import dao.exceptions.NonexistentEntityException;
 import entities.Client;
 import entities.Employee;
 import entities.Intervention;

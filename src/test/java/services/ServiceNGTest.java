@@ -1,7 +1,7 @@
 package services;
 
 import dao.JpaUtil;
-import dao.deleteDB;
+import dao.DeleteDB;
 import entities.Address;
 import entities.Client;
 import entities.Employee;
@@ -80,7 +80,7 @@ public class ServiceNGTest {
 
     @org.testng.annotations.AfterMethod
     public void tearDownMethod() throws Exception {
-        deleteDB.dropAllTable();
+        DeleteDB.dropAllTable();
     }
 
     /**
@@ -318,7 +318,7 @@ public class ServiceNGTest {
         logger.info("Résultat attendu : {}", Arrays.toString(expResult));
         
         for(int i = 0; i<REPEAT; i++) {
-            deleteDB.dropEmployeeTable();    
+            DeleteDB.dropEmployeeTable();    
             boolean result[] = new boolean[expResult.length];
             result[0] = Service.getFinishedInterventionsByEmployee(new Long(0)).isEmpty();
             Intervention notFound = new Intervention(UUID.randomUUID().toString(), new Date());

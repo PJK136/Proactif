@@ -3,10 +3,7 @@
  */
 package dao;
 
-import javax.persistence.Query;
-
-
-public class deleteDB {
+public class DeleteDB {
     
     private static void executeQueries(String... queries) {
         JpaUtil.createEntityManager();

@@ -15,7 +15,4 @@ public class EmployeeDAO {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT e FROM Employee e WHERE e.available = TRUE AND e.workStart <= :now AND :now <= e.workEnd").setParameter("now", new Date(), TemporalType.TIME);
         return (List<Employee>) query.getResultList();
     }
-    
-    
-    
 }
