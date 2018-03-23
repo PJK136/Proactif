@@ -29,8 +29,7 @@ public class Address implements Serializable {
         this.country = country;
     }
 
-    public String getFullAddress()
-    {
+    public String getFullAddress() {
         return address1 + ", " + zipCode + " " + city + ", " + country;
     }        
     

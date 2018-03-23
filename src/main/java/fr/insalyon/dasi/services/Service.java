@@ -53,15 +53,11 @@ public final class Service {
             JpaUtil.commitTransaction();
             EmailSender.sendRegistrationConfirmation(p);
             return true;
-        }
-        catch(RollbackException e) 
-        {
+        } catch(RollbackException e) {
             JpaUtil.rollbackTransaction();
             EmailSender.sendRegistrationFailure(p);
             return false;
-        }
-        finally
-        {
+        } finally {
             JpaUtil.closeEntityManager();
         }
     }
@@ -74,9 +70,7 @@ public final class Service {
                 if (PasswordUtil.verify(person.getPasswordHash(), password, CHARSET))
                     return person;
             }
-        }
-        finally
-        {
+        } finally {
             JpaUtil.closeEntityManager();
         }
         
@@ -99,12 +93,9 @@ public final class Service {
                 EmailSender.sendResetPassword(person, resetPassword);
                 return true;
             }
-        }catch(RollbackException e) 
-        {
+        }catch(RollbackException e) {
             JpaUtil.rollbackTransaction();
-        }
-        finally
-        {
+        } finally {
             JpaUtil.closeEntityManager();
         }
         return false;
@@ -161,14 +152,10 @@ public final class Service {
             JpaUtil.commitTransaction();
             NotificationSender.sendInterventionNeeded(intervention);
             return true;
-        } 
-        catch(RollbackException e) 
-        {
+        } catch(RollbackException e) {
             JpaUtil.rollbackTransaction(); 
             return false;
-        }
-        finally
-        {
+        } finally {
             JpaUtil.closeEntityManager();
         } 
     }
@@ -177,9 +164,7 @@ public final class Service {
         JpaUtil.createEntityManager();
         try {
             return InterventionDAO.findInterventionsByClient(clientId);
-        }
-        finally
-        {
+        } finally {
             JpaUtil.closeEntityManager();
         }
     }
@@ -188,9 +173,7 @@ public final class Service {
         JpaUtil.createEntityManager();
         try {
             return InterventionDAO.findInterventionToDoByEmployee(employeeId);
-        }
-        finally
-        {
+        } finally {
             JpaUtil.closeEntityManager();
         }
     }
@@ -199,9 +182,7 @@ public final class Service {
         JpaUtil.createEntityManager();
         try {
             return InterventionDAO.findFinishedInterventionsByEmployee(employeeId);
-        }
-        finally
-        {
+        } finally {
             JpaUtil.closeEntityManager();
         }
     }
@@ -210,9 +191,7 @@ public final class Service {
         JpaUtil.createEntityManager();
         try {
             return InterventionDAO.findInterventionsByDay(day);
-        }
-        finally
-        {
+        } finally {
             JpaUtil.closeEntityManager();
         }
     }
