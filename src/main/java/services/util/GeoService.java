@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 public final class GeoService {
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(GeoService.class);
 
-    final static String MA_CLÉ_GOOGLE_API = "AIzaSyALExqdz0iuPN31D5jsPUp7eYHyUnstYgA";
+    final static String MA_CLÉ_GOOGLE_API = "AIzaSyAhf3JleYpal9S-xouJYH8lf7Dvz5Y2Nko";
 
     final static GeoApiContext MON_CONTEXTE_GEOAPI = new GeoApiContext.Builder().queryRateLimit(1000).apiKey(MA_CLÉ_GOOGLE_API).build();
 
