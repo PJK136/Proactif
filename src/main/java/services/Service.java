@@ -135,12 +135,20 @@ public final class Service {
             double distanceMin = Double.MAX_VALUE;
 
             for (Employee employee : availableEmployees) {
-                double currentDistance = GeoService.getTripDurationByBicycleInKm(employee.getAddress().getGeoCoords(), clientCoords);
-                if(distanceMin > currentDistance)
+                Double currentDistance = GeoService.getTripDurationByBicycleInKm(employee.getAddress().getGeoCoords(), clientCoords);
+                if (currentDistance != null)
                 {
-                    distanceMin = currentDistance;
-                    closest = employee; 
-                }    
+                    if(distanceMin > currentDistance)
+                    {
+                        distanceMin = currentDistance;
+                        closest = employee; 
+                    }
+                }
+            }
+            
+            if (closest == null) {
+                logger.error("Impossible de trouver l'employé le plus proche pour {}", intervention);
+                return false;
             }
             
             intervention.setClient(client);
