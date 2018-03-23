@@ -49,7 +49,7 @@ public abstract class Person implements Serializable {
         this.lastName = lastName;
         this.birthDate = birthdate;
         this.phoneNumber = phoneNumber;
-        this.email = email;
+        this.email = email.toLowerCase();
         this.address = address;
     }
 

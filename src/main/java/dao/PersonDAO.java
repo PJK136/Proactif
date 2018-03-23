@@ -19,7 +19,7 @@ public class PersonDAO {
         
     public static Person findByEmail(String email) {
         Query query = JpaUtil.getEntityManager().createQuery("SELECT p FROM Person p WHERE p.email = :email")
-                .setParameter("email", email);
+                .setParameter("email", email.toLowerCase());
         List<Person> interventions = (List<Person>) query.getResultList();
         return interventions.isEmpty()?null:interventions.get(0);
     }
